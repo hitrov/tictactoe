@@ -24,7 +24,13 @@ DROP TABLE IF EXISTS `game`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  `player_1` int(10) unsigned NOT NULL,
+  `player_2` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `player_1` (`player_1`),
+  KEY `player_2` (`player_2`),
+  CONSTRAINT `game_ibfk_1` FOREIGN KEY (`player_1`) REFERENCES `player` (`id`),
+  CONSTRAINT `game_ibfk_2` FOREIGN KEY (`player_2`) REFERENCES `player` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -78,7 +84,7 @@ CREATE TABLE `player` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,6 +93,7 @@ CREATE TABLE `player` (
 
 LOCK TABLES `player` WRITE;
 /*!40000 ALTER TABLE `player` DISABLE KEYS */;
+INSERT INTO `player` VALUES (1,'sasha'),(2,'tanya');
 /*!40000 ALTER TABLE `player` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -99,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-13 20:08:30
+-- Dump completed on 2018-01-13 21:09:49
