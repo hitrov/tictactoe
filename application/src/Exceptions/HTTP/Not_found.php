@@ -10,8 +10,4 @@ namespace TicTacToe\Exceptions\HTTP;
 
 class Not_found extends Base_http_exception {
     const HTTP_CODE = 404;
-
-    public function get_http_code() {
-        return self::HTTP_CODE;
-    }
 }
