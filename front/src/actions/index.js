@@ -2,7 +2,7 @@ import * as api from '../api';
 
 const move = response => ({
     type: 'MOVE',
-    moveId: response.move_id,
+    moveId: response.id,
 });
 
 export const postMove = (gameId, action) => dispatch =>
@@ -25,7 +25,7 @@ export const postCreatePlayers = (player1Name, player2Name) => dispatch =>
 
 const game = response => ({
     type: 'GAME',
-    gameId: response.game_id,
+    gameId: response.id,
 });
 
 export const postGame = (player1Id, player2Id) => dispatch =>

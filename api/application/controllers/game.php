@@ -24,9 +24,7 @@ class Game extends MY_Controller {
 
             $game_id = $this->game_model->create($player_1_id, $player_2_id);
 
-            $this->response = [
-                'game_id' => $game_id,
-            ];
+            $this->response = $this->game_model->get($game_id);
         } else {
             $this->errors = $game_form->error_array();
         }
