@@ -9,5 +9,5 @@
 namespace TicTacToe\Exceptions;
 
 
-class Player_win extends \Exception {
+class Game_already_finished extends \Exception {
 }

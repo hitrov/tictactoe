@@ -5,6 +5,7 @@ use TicTacToe\Exceptions\Moves_are_off;
 use TicTacToe\Exceptions\Game_not_found;
 use TicTacToe\Exceptions\Action_already_exists;
 use TicTacToe\Exceptions\Player_win;
+use TicTacToe\Exceptions\Game_already_finished;
 
 use TicTacToe\Exceptions\HTTP\Internal_server_error;
 
@@ -52,6 +53,11 @@ class Move extends MY_Controller {
             } catch(Internal_server_error $e) {
                 $this->errors[] = 'Move won but unknown server error occurred';
 
+            } catch(Game_already_finished $e) {
+                $this->response = [
+                    'finished' => true,
+                    'player_id' => $e->getMessage(),
+                ];
             } catch(Player_win $e) {
                 $this->response = [
                     'won' => true,

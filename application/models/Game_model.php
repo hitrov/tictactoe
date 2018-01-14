@@ -18,6 +18,17 @@ class Game_model extends MY_Model {
         return $this->db->insert_id();
     }
 
+    public function get_winner_id(int $game_id) {
+        $winner = $this->db->select('player_id_won')
+            ->limit(1)
+            ->get_where($this->table_name, [
+                'id' => $game_id,
+            ])
+            ->row_array();
+
+        return $winner['player_id_won'];
+    }
+
     public function win(int $game_id, int $player_id) {
         return $this->db
             ->where([

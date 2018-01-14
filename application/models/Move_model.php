@@ -9,8 +9,10 @@
 use TicTacToe\Exceptions\Moves_are_off;
 use TicTacToe\Exceptions\Action_already_exists;
 use TicTacToe\Exceptions\Game_not_found;
-use TicTacToe\Exceptions\HTTP\Internal_server_error;
 use TicTacToe\Exceptions\Player_win;
+use TicTacToe\Exceptions\Game_already_finished;
+
+use TicTacToe\Exceptions\HTTP\Internal_server_error;
 
 class Move_model extends MY_Model {
     public $table_name = 'move';
@@ -89,6 +91,11 @@ class Move_model extends MY_Model {
 
         if (empty($game)) {
             throw new Game_not_found();
+        }
+
+        $winner_id = $this->game_model->get_winner_id($game_id);
+        if ($winner_id) {
+            throw new Game_already_finished($winner_id);
         }
 
         $moves = $this->db
