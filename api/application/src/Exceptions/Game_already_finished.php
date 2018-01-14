@@ -9,5 +9,7 @@
 namespace TicTacToe\Exceptions;
 
 
-class Game_already_finished extends \Exception {
+use TicTacToe\Exceptions\HTTP\Bad_request;
+
+class Game_already_finished extends Bad_request {
 }

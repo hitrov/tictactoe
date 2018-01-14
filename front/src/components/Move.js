@@ -5,14 +5,15 @@ const style = {
     width: '100px',
     height: '100px',
     border: '1px black solid',
+    margin: '5px',
 };
 
 const Move = props => {
-    const { action, onMoveClick } = props;
+    const { symbol, onMoveClick } = props;
 
     return (
         <div style={style} onClick={onMoveClick}>
-            {action}
+            {symbol}
         </div>
     );
 };

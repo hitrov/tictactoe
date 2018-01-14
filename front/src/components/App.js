@@ -5,7 +5,7 @@ import PlayingField from './PlayingField';
 
 class App extends Component {
   render() {
-      const { postMove, setPlayerNames, postCreatePlayers, postGame,
+      const { setPlayerNames, postCreatePlayers, postGame,
           player1Id, player2Id, gameId } = this.props;
 
       let player1NameInput, player2NameInput;
@@ -34,13 +34,6 @@ class App extends Component {
               Create Players
           </button>
 
-          {gameId !== undefined &&
-          <button
-              onClick={() => postMove(gameId, 8)}
-          >
-              Move
-          </button>}
-
           {player1Id !== undefined && player2Id !== undefined &&
           <button
               onClick={() => postGame(player1Id, player2Id)}
@@ -48,7 +41,8 @@ class App extends Component {
               Create Game
           </button>}
 
-          <PlayingField />
+          {gameId !== undefined &&
+          <PlayingField />}
       </div>
     );
   }

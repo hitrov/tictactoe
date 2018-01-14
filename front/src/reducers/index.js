@@ -3,7 +3,7 @@ const reducer = (state = {}, action) => {
         case 'MOVE':
             return {
                 ...state,
-                moveId: action.moveId,
+                moves: [...state.moves, action.move],
             };
 
         case 'SET_PLAYER_NAMES':
@@ -20,10 +20,18 @@ const reducer = (state = {}, action) => {
                 player2Id: action.player2Id,
             };
 
+        case 'SET_X_O':
+            return {
+                ...state,
+                xId: action.xId,
+                oId: action.oId,
+            };
+
         case 'GAME':
             return {
                 ...state,
                 gameId: action.gameId,
+                moves: [],
             };
 
         default:
