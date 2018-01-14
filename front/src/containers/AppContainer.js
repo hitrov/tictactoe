@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postMove } from '../actions';
+import { postMove, postCreatePlayers } from '../actions';
 import { withRouter } from 'react-router-dom';
 import App from '../components/App';
 
@@ -9,6 +9,7 @@ class AppContainer extends Component {
         return (
             <App
                 postMove={this.props.postMove}
+                postCreatePlayers={this.props.postCreatePlayers}
             />
         );
     }
@@ -18,6 +19,7 @@ AppContainer = withRouter(connect((state, ownProps) => ({
 
 }), {
     postMove,
+    postCreatePlayers,
 })(AppContainer));
 
 export default AppContainer;

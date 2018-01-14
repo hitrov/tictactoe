@@ -1,6 +1,7 @@
 import {
     API_BASE_URL,
     API_MOVE_URL,
+    API_CREATE_PLAYERS_URL,
 } from '../constants';
 
 const callApi = (url, method, body, headers) => {
@@ -38,4 +39,10 @@ export const move = (gameId, action) =>
     callApi(API_MOVE_URL, "POST", {
         'game_id': gameId,
         action,
+    });
+
+export const createPlayers = (player1Name, player2Name) =>
+    callApi(API_CREATE_PLAYERS_URL, "POST", {
+        'player_1': player1Name,
+        'player_2': player2Name,
     });
