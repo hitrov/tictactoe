@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-      const { postMove, postCreatePlayers } = this.props;
+      const { postMove, postCreatePlayers, postGame } = this.props;
 
       let player1NameInput, player2NameInput;
 
@@ -30,6 +30,12 @@ class App extends Component {
             onClick={() => postMove(2, 8)}
           >
               Move
+          </button>
+
+          <button
+              onClick={() => postGame(1, 2)}
+          >
+              Create Game
           </button>
       </div>
     );

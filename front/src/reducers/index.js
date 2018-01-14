@@ -6,6 +6,9 @@ const reducer = (state = {}, action) => {
         case 'CREATE_PLAYERS':
             return state;
 
+        case 'GAME':
+            return state;
+
         default:
             return state;
     }
