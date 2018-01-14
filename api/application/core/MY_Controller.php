@@ -10,6 +10,17 @@ class MY_Controller extends CI_Controller {
 
     protected $http_code = 200;
 
+    const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
+    const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
+    const HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
+
+    protected $headers = [
+        'Access-Control-Allow-Origin' => 'http://localhost:3000',
+        self::HEADER_ACCESS_CONTROL_ALLOW_METHODS => [],
+        self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type'],
+        self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true',
+    ];
+
     protected $response;
 
     protected $available_methods = [];
@@ -18,6 +29,12 @@ class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+
+        if ($this->input->method(true) == 'OPTIONS') {
+            $this->handle_cors();
+            $this->send_response();
+            return;
+        }
 
         try {
             if (!in_array($this->input->method(true), $this->available_methods)) {
@@ -37,6 +54,19 @@ class MY_Controller extends CI_Controller {
         }
     }
 
+    private function handle_cors() {
+        $this->headers[self::HEADER_ACCESS_CONTROL_ALLOW_METHODS] = $this->available_methods;
+        foreach ($this->headers as $name => $value) {
+            $header = is_array($value) ?
+                implode(',', $value) :
+                $value;
+
+            $header_value = $name . ': ' . $header;
+            header($header_value);
+        }
+        $this->processed = true;
+    }
+
     protected function send_response() {
         http_response_code($this->http_code);
         $this->output->set_content_type('application/json');
@@ -54,7 +84,7 @@ class MY_Controller extends CI_Controller {
 
 	public function index()
 	{
-        $this->http_code = Not_found::HTTP_CODE;
+        $this->http_code = 404;
 	    $this->errors[] = 'Resource not found';
 	    $this->send_response();
 	}

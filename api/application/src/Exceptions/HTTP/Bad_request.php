@@ -9,5 +9,5 @@
 namespace TicTacToe\Exceptions\HTTP;
 
 class Bad_request extends Base_http_exception {
-    const HTTP_CODE = 400;
+    protected $http_code = 400;
 }

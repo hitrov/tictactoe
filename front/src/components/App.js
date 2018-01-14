@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
+      const { postMove } = this.props;
+
     return (
       <div className="App">
         <header className="App-header">
@@ -13,6 +15,12 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
+
+          <button
+            onClick={() => postMove(2, 8)}
+          >
+              Move
+          </button>
       </div>
     );
   }

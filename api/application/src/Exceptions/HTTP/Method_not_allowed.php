@@ -9,5 +9,5 @@
 namespace TicTacToe\Exceptions\HTTP;
 
 class Method_not_allowed extends Base_http_exception {
-    const HTTP_CODE = 405;
+    protected $http_code = 405;
 }

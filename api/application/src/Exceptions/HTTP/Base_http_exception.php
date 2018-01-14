@@ -9,9 +9,9 @@
 namespace TicTacToe\Exceptions\HTTP;
 
 class Base_http_exception extends \Exception {
-    const HTTP_CODE = 500;
+    protected $http_code = 500;
 
     public function get_http_code() {
-        return self::HTTP_CODE;
+        return $this->http_code;
     }
 }
