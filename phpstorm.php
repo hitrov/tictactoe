@@ -123,6 +123,10 @@ class CI_Controller {
  * @property CI_Xmlrpcs          $xmlrpcs                             XML-RPC server class
  * @property CI_Zip              $zip                                 Zip Compression Class
  * @property CI_Utf8             $utf8                                Provides support for UTF-8 environments
+ *
+ * @property Player_model          $player_model
+ * @property Game_model            $game_model
+ * @property Move_model            $move_model
  */
 class CI_Model {
 

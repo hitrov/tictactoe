@@ -6,7 +6,7 @@
  * Time: 20:18
  */
 
-class Player_model extends CI_Model {
+class Player_model extends MY_Model {
     public $table_name = 'player';
 
     public function create(string $name): int {

@@ -15,11 +15,6 @@ class Move_form extends CI_Form_validation {
             'rules' => 'required|integer|greater_than_equal_to[1]',
         ],
         [
-            'field' => 'player_id',
-            'label' => '',
-            'rules' => 'required|integer|greater_than_equal_to[1]',
-        ],
-        [
             'field' => 'action',
             'label' => '',
             'rules' => 'required|in_list[1,2,3,4,5,6,7,8,9]',
