@@ -4,7 +4,8 @@ import './App.css';
 
 class App extends Component {
   render() {
-      const { postMove, postCreatePlayers, postGame } = this.props;
+      const { postMove, setPlayerNames, postCreatePlayers, postGame,
+          player1Id, player2Id, gameId } = this.props;
 
       let player1NameInput, player2NameInput;
 
@@ -21,22 +22,30 @@ class App extends Component {
           <input ref={node => player1NameInput = node} />
           <input ref={node => player2NameInput = node} />
           <button
-              onClick={() => postCreatePlayers(player1NameInput.value, player2NameInput.value)}
+              onClick={() => {
+                  const player1Name = player1NameInput.value;
+                  const player2Name = player2NameInput.value;
+
+                  setPlayerNames(player1Name, player2Name);
+                  postCreatePlayers(player1Name, player2Name)
+              }}
           >
               Create Players
           </button>
 
+          {gameId !== undefined &&
           <button
-            onClick={() => postMove(2, 8)}
+              onClick={() => postMove(gameId, 8)}
           >
               Move
-          </button>
+          </button>}
 
+          {player1Id !== undefined && player2Id !== undefined &&
           <button
-              onClick={() => postGame(1, 2)}
+              onClick={() => postGame(player1Id, player2Id)}
           >
               Create Game
-          </button>
+          </button>}
       </div>
     );
   }

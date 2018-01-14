@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postMove, postCreatePlayers, postGame } from '../actions';
+import { postMove, setPlayerNames, postCreatePlayers, postGame } from '../actions';
 import { withRouter } from 'react-router-dom';
 import App from '../components/App';
 
@@ -8,18 +8,23 @@ class AppContainer extends Component {
     render(){
         return (
             <App
-                postMove={this.props.postMove}
-                postCreatePlayers={this.props.postCreatePlayers}
-                postGame={this.props.postGame}
+                {...this.props}
             />
         );
     }
 }
 
-AppContainer = withRouter(connect((state, ownProps) => ({
+AppContainer = withRouter(connect(state => {
+    const { player1Id, player2Id, gameId } = state;
 
-}), {
+    return {
+        player1Id,
+        player2Id,
+        gameId,
+    }
+}, {
     postMove,
+    setPlayerNames,
     postCreatePlayers,
     postGame,
 })(AppContainer));
