@@ -31,7 +31,6 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
 
         if ($this->input->method(true) == 'OPTIONS') {
-            $this->handle_cors();
             $this->send_response();
             return;
         }
@@ -64,11 +63,13 @@ class MY_Controller extends CI_Controller {
             $header_value = $name . ': ' . $header;
             header($header_value);
         }
-        $this->processed = true;
     }
 
     protected function send_response() {
         http_response_code($this->http_code);
+
+        $this->handle_cors();
+
         $this->output->set_content_type('application/json');
 
         $response = $this->response;
