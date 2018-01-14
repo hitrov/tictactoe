@@ -1,4 +1,5 @@
 import React from 'react';
+
 const style = {
     display: 'inline-block',
     width: '100px',
@@ -6,9 +7,14 @@ const style = {
     border: '1px black solid',
 };
 
-const Move = props =>
-    <div style={style}>
-        {props.action}
-    </div>;
+const Move = props => {
+    const { action, onMoveClick } = props;
+
+    return (
+        <div style={style} onClick={onMoveClick}>
+            {action}
+        </div>
+    );
+};
 
 export default Move;

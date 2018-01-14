@@ -1,9 +1,9 @@
 import React from 'react';
-import Move from './Move';
+import MoveContainer from '../containers/MoveContainer';
 
 const Line = props =>
     <div>
-        {props.line.map(action => <Move action={action} />)}
+        {props.line.map(action => <MoveContainer key={action} action={action} />)}
     </div>;
 
 export default Line;
