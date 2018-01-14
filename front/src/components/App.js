@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
 import './App.css';
+import PlayingField from './PlayingField';
 
 class App extends Component {
   render() {
@@ -46,6 +47,8 @@ class App extends Component {
           >
               Create Game
           </button>}
+
+          <PlayingField />
       </div>
     );
   }
