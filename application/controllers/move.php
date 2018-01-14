@@ -51,7 +51,8 @@ class Move extends MY_Controller {
                 $this->errors[] = $e->getMessage();
 
             } catch(Internal_server_error $e) {
-                $this->errors[] = 'Move won but unknown server error occurred';
+                $this->http_code = $e->get_http_code();
+                $this->errors[] = $e->getMessage();
 
             } catch(Game_already_finished $e) {
                 $this->response = [

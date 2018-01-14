@@ -80,7 +80,7 @@ class Move_model extends MY_Model {
         if (in_array($actions, self::WIN_COMBINATIONS)) {
             $result = $this->game_model->win($game_id, $player_id);
             if (!$result) {
-                throw new Internal_server_error();
+                throw new Internal_server_error('Move won but unknown server error occurred');
             }
             throw new Player_win($move_id);
         }
