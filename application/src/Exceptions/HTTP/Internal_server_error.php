@@ -9,8 +9,6 @@
 namespace TicTacToe\Exceptions\HTTP;
 
 class Internal_server_error extends Base_http_exception {
-    const HTTP_CODE = 500;
-
     public function get_http_code() {
         return self::HTTP_CODE;
     }

@@ -9,6 +9,8 @@
 namespace TicTacToe\Exceptions;
 
 
-class Action_already_exists extends \Exception {
+use TicTacToe\Exceptions\HTTP\Bad_request;
+
+class Action_already_exists extends Bad_request {
     public $message = 'Such action already have been done in that game';
 }

@@ -9,6 +9,8 @@
 namespace TicTacToe\Exceptions;
 
 
-class Game_not_found extends \Exception {
+use TicTacToe\Exceptions\HTTP\Not_found;
+
+class Game_not_found extends Not_found {
     public $message = 'Game with such id not found';
 }

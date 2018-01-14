@@ -9,6 +9,8 @@
 namespace TicTacToe\Exceptions;
 
 
-class Moves_are_off extends \Exception {
+use TicTacToe\Exceptions\HTTP\Bad_request;
+
+class Moves_are_off extends Bad_request {
     public $message = 'All moves in that game have been done';
 }
