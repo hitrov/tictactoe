@@ -34,6 +34,12 @@ const reducer = (state = {}, action) => {
                 moves: [],
             };
 
+        case 'SET_HISTORY':
+            return {
+                ...state,
+                history: action.response,
+            };
+
         default:
             return state;
     }

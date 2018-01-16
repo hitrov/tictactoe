@@ -42,3 +42,12 @@ export const postGame = (player1Id, player2Id) => dispatch => {
 
     api.createGame(player1Id, player2Id).then(response => dispatch(game(response)));
 };
+
+const setHistory = response => ({
+    type: 'SET_HISTORY',
+    response,
+});
+
+export const fetchHistory = () => dispatch => {
+    api.getHistory().then(response => dispatch(setHistory(response)));
+};

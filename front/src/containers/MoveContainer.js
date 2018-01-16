@@ -20,10 +20,10 @@ class MoveContainer extends Component {
 MoveContainer = connect((state, ownProps) => {
     const { gameId, xId } = state;
     const { action } = ownProps;
-    const move = state.moves.find(move => parseInt(move.action) === action);
+    const move = state.moves.find(move => parseInt(move.action, 10) === action);
     let movePlayerId, symbol = '';
     if (move) {
-        movePlayerId = parseInt(move.player_id);
+        movePlayerId = parseInt(move.player_id, 10);
         symbol = movePlayerId === xId
             ? 'X'
             : 'O';

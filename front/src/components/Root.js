@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import AppContainer from '../containers/AppContainer';
+import HistoryContainer from '../containers/HistoryContainer';
 import NotFound from './NotFound';
 
 import createBrowserHistory from 'history/createBrowserHistory'
@@ -16,6 +17,7 @@ const Root = ({ store }) => (
             <div>
                 <Switch>
                     <Route exact path="/" component={AppContainer} />
+                    <Route path="/history" component={HistoryContainer} />
                     <Route component={NotFound} />
                 </Switch>
             </div>

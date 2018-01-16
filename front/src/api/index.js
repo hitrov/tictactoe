@@ -3,6 +3,7 @@ import {
     API_MOVE_URL,
     API_CREATE_PLAYERS_URL,
     API_GAME_URL,
+    API_HISTORY_URL,
 } from '../constants';
 
 const callApi = (url, method, body, headers) => {
@@ -53,3 +54,6 @@ export const createGame = (player1Id, player2Id) =>
         'player_1': player1Id,
         'player_2': player2Id,
     });
+
+export const getHistory = () =>
+    callApi(API_HISTORY_URL, "GET");
