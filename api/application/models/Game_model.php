@@ -48,7 +48,7 @@ class Game_model extends MY_Model {
 
             $move = [
                 'player_id' => $row['player_id'],
-                'action' => $row['player_id'],
+                'action' => $row['action'],
                 'dt' => $row['dt'],
             ];
 
