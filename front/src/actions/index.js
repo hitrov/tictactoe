@@ -1,12 +1,25 @@
 import * as api from '../api';
 
-const move = response => ({
+const move = move => ({
     type: 'MOVE',
-    move: response,
+    move: move,
+});
+
+const addRecentGame = (playerIdWon, dt) => ({
+    type: 'ADD_RECENT_GAME',
+    playerIdWon,
+    dt,
 });
 
 export const postMove = (gameId, action) => dispatch =>
-    api.move(gameId, action).then(response => dispatch(move(response)));
+    api.move(gameId, action).then(m => {
+
+        if (m.player_id_won) {
+            dispatch(addRecentGame(m.player_id_won, m.dt));
+        }
+
+        dispatch(move(m));
+    });
 
 export const setPlayerNames = (player1Name, player2Name) => ({
     type: 'SET_PLAYER_NAMES',
@@ -36,12 +49,12 @@ export const postCreatePlayers = (player1Name, player2Name) => dispatch => {
 const game = response => ({
     type: 'GAME',
     gameId: response.id,
+    player1Id: response.player_1,
+    player2Id: response.player_2,
 });
 
-export const postGame = (player1Id, player2Id) => dispatch => {
-
+export const postGame = (player1Id, player2Id) => dispatch =>
     api.createGame(player1Id, player2Id).then(response => dispatch(game(response)));
-};
 
 const setHistory = response => ({
     type: 'SET_HISTORY',

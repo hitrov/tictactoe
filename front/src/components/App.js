@@ -3,11 +3,12 @@ import logo from '../logo.svg';
 import './App.css';
 import PlayingField from './PlayingField';
 import { Link } from 'react-router-dom';
+import History from './History';
 
 class App extends Component {
   render() {
       const { setPlayerNames, postCreatePlayers, postGame,
-          player1Id, player2Id, gameId } = this.props;
+          player1Id, player2Id, gameId, recents } = this.props;
 
       let player1NameInput, player2NameInput;
 
@@ -43,8 +44,10 @@ class App extends Component {
               Create Game
           </button>}
 
-          {gameId !== undefined &&
+          {gameId !== null &&
           <PlayingField />}
+
+          <History isRecents={true} history={recents} />
       </div>
     );
   }

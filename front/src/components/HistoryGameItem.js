@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HistoryGameItem = props => {
-    const { item, gameId } = props;
+    const { item } = props;
 
     let player1Style, player2Style;
     if (item.player_id_won) {
@@ -11,7 +11,7 @@ const HistoryGameItem = props => {
 
     return (
         <tr>
-            <td>{gameId}</td>
+            <td>{item.game_id}</td>
             <td style={player1Style}>
                 {item.player_1.name}
             </td>

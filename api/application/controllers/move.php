@@ -43,10 +43,10 @@ class Move extends MY_Controller {
                     'player_id' => $e->getMessage(),
                 ];
             } catch(Player_win $e) {
-                $this->response = [
-                    'won' => true,
-                    'move_id' => $e->getMessage(),
-                ];
+                $move_id = $e->getMessage();
+                $move = $this->move_model->get($move_id);
+                $move['player_id_won'] = $move['player_id'];
+                $this->response = $move;
             }
         } else {
             $this->errors = $move_form->error_array();

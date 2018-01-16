@@ -14,7 +14,7 @@ const configureStore = () => {
     }));
 
     const persistedState = loadState() || {
-        moves: [],
+        recents: [],
     };
 
     const store = createStore(

@@ -54,6 +54,7 @@ class Game_model extends MY_Model {
 
             if (empty($history[$game_id])) {
                 $history[$game_id] = [
+                    'game_id' => $game_id,
                     'player_1' => [
                         'id' => $row['player_1'],
                         'name' => $row['player_1_name'],
@@ -70,13 +71,15 @@ class Game_model extends MY_Model {
             $history[$game_id]['moves'][$row['move_id']] = $move;
         }
 
+        $ordered_history = [];
         foreach ($history as $game_id => $game) {
             if ($game['player_id_won'] && !empty($game['moves'])) {
                 $history[$game_id]['finished'] = end($history[$game_id]['moves'])['dt'];
             }
+            $ordered_history[] = $history[$game_id];
         }
 
-        return $history;
+        return $ordered_history;
     }
 
     public function history(int $player_id = null, int $offset = 0, int $limit = 50): array {
@@ -85,6 +88,7 @@ class Game_model extends MY_Model {
                                     '(SELECT player.name FROM player WHERE id = game.`player_2`) as player_2_name, '.
                                     'player_1, player_2, player_id_won, move.id as move_id, move.player_id, action, dt')
             ->join('move', 'game.id = move.game_id')
+            ->order_by('game_id', 'DESC')
             ->limit($limit);
 
         if ($offset) {

@@ -15,12 +15,14 @@ class AppContainer extends Component {
 }
 
 AppContainer = withRouter(connect(state => {
-    const { player1Id, player2Id, gameId } = state;
+    const { player1Id, player2Id, game, recents } = state;
+    const gameId = game ? game.game_id : null;
 
     return {
         player1Id,
         player2Id,
         gameId,
+        recents,
     }
 }, {
     postMove,

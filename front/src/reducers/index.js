@@ -3,7 +3,10 @@ const reducer = (state = {}, action) => {
         case 'MOVE':
             return {
                 ...state,
-                moves: [...state.moves, action.move],
+                game: {
+                    ...state.game,
+                    moves: [...state.game.moves, action.move],
+                },
             };
 
         case 'SET_PLAYER_NAMES':
@@ -28,16 +31,42 @@ const reducer = (state = {}, action) => {
             };
 
         case 'GAME':
+            const { player1Name, player2Name } = state;
+            const { gameId, player1Id, player2Id } = action;
+
             return {
                 ...state,
-                gameId: action.gameId,
-                moves: [],
+                game: {
+                    game_id: gameId,
+                    player_1: {
+                        id: player1Id,
+                        name: player1Name,
+                    },
+                    player_2: {
+                        id: player2Id,
+                        name: player2Name,
+                    },
+                    moves: [],
+                },
             };
 
         case 'SET_HISTORY':
             return {
                 ...state,
                 history: action.response,
+            };
+
+        case 'ADD_RECENT_GAME':
+            const game = {
+                ...state.game,
+                player_id_won: action.playerIdWon,
+                finished: action.dt,
+            };
+
+            return {
+                ...state,
+                game,
+                recents: [...state.recents, game],
             };
 
         default:
