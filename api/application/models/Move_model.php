@@ -78,8 +78,33 @@ class Move_model extends MY_Model {
 
         $actions = array_column($moves, 'action');
 
-        if (in_array($actions, self::WIN_COMBINATIONS)) {
-            $result = $this->game_model->win($game_id, $player_id);
+        if (count($actions) < 3) {
+            return;
+        }
+
+        $won_combination = [];
+
+        // fast check
+        if (false !== $key = array_search($actions, self::WIN_COMBINATIONS)) {
+            $won_combination = self::WIN_COMBINATIONS[$key];
+        } else {
+            // slower check
+            foreach (self::WIN_COMBINATIONS as $combination) {
+                $in_win_combination = 0;
+                foreach ($actions as $action) {
+                    if (!in_array($action, $combination)) {
+                        continue;
+                    }
+                    $in_win_combination++;
+                    if ($in_win_combination == 3) {
+                        $won_combination = $combination;
+                    }
+                }
+            }
+        }
+
+        if (!empty($won_combination)) {
+            $result = $this->game_model->win($game_id, $player_id, $won_combination);
             if (!$result) {
                 throw new Internal_server_error('Move won but unknown server error occurred');
             }

@@ -62,6 +62,7 @@ const reducer = (state = {}, action) => {
             const game = {
                 ...state.game,
                 player_id_won: action.playerIdWon,
+                won_combination: action.wonCombination,
                 finished: action.dt,
                 draw: action.draw,
             };

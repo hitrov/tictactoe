@@ -23,15 +23,14 @@ MoveContainer = connect((state, ownProps) => {
     const { game, xId } = state;
     const { action } = ownProps;
 
-    const isWonMove = getIsWonMove(game, action);
     const symbol = getSymbol(game, action, xId);
 
     return {
         action,
         symbol,
         gameId: game ? game.game_id: null,
-        gameFinished: game && (game.player_id_won || game.draw),
-        isWonMove,
+        gameFinished: game && (game.draw || (game.player_id_won && game.won_combination)),
+        isWonMove: game.won_combination && game.won_combination.indexOf(action) !== -1,
     };
 }, {
     postMove,

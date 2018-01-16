@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 16, 2018 at 06:58 AM
+-- Generation Time: Jan 16, 2018 at 08:49 PM
 -- Server version: 5.7.20
 -- PHP Version: 7.0.25
 
@@ -32,7 +32,8 @@ CREATE TABLE `game` (
   `id` int(10) UNSIGNED NOT NULL,
   `player_1` int(10) UNSIGNED NOT NULL,
   `player_2` int(10) UNSIGNED NOT NULL,
-  `player_id_won` int(10) UNSIGNED DEFAULT NULL
+  `player_id_won` int(10) UNSIGNED DEFAULT NULL,
+  `won_combination` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

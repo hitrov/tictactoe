@@ -16,6 +16,7 @@ class Move extends MY_Controller {
 
         $this->load->library('move_form');
         $this->load->model('move_model');
+        $this->load->model('game_model');
     }
 
 	public function index()
@@ -46,7 +47,9 @@ class Move extends MY_Controller {
             } catch(Player_win $e) {
                 $move_id = $e->getMessage();
                 $move = $this->move_model->get($move_id);
+                $game = $this->game_model->get($move['game_id']);
                 $move['player_id_won'] = $move['player_id'];
+                $move['won_combination'] = unserialize($game['won_combination']);
                 $this->response = $move;
             }
             catch(Draw $e) {

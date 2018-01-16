@@ -5,9 +5,10 @@ const move = move => ({
     move: move,
 });
 
-const addRecentGame = (playerIdWon, dt, draw) => ({
+const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
     type: 'ADD_RECENT_GAME',
     playerIdWon,
+    wonCombination,
     dt,
     draw,
 });
@@ -16,7 +17,7 @@ export const postMove = (gameId, action) => dispatch =>
     api.move(gameId, action).then(m => {
 
         if (m.player_id_won || m.draw) {
-            dispatch(addRecentGame(m.player_id_won, m.dt, m.draw));
+            dispatch(addRecentGame(m.player_id_won, m.won_combination, m.dt, m.draw));
         }
 
         dispatch(move(m));
@@ -64,26 +65,6 @@ const setHistory = response => ({
 
 export const fetchHistory = () => dispatch => {
     api.getHistory().then(response => dispatch(setHistory(response)));
-};
-
-export const getIsWonMove = (game, action) => {
-    let isWonMove = false;
-    if (!game) {
-        return isWonMove;
-    }
-
-    const move = game.moves.find(move => parseInt(move.action, 10) === action);
-    if (!move) {
-        return isWonMove;
-    }
-
-    const winnerMoves = game.moves
-        .filter(move => move.player_id === game.player_id_won)
-        .map(move => parseInt(move.action, 10));
-
-    isWonMove = winnerMoves.indexOf(action) !== -1;
-
-    return isWonMove;
 };
 
 export const getSymbol = (game, action, xId) => {

@@ -29,7 +29,7 @@ class Game_model extends MY_Model {
         return $winner['player_id_won'];
     }
 
-    public function win(int $game_id, int $player_id) {
+    public function win(int $game_id, int $player_id, array $won_combination) {
         return $this->db
             ->where([
                 'id' => $game_id,
@@ -37,6 +37,7 @@ class Game_model extends MY_Model {
             ->where("(`player_1` = '$player_id' OR `player_2` = '$player_id')", null, false)
             ->update($this->table_name, [
                 'player_id_won' => $player_id,
+                'won_combination' => serialize($won_combination),
             ]);
     }
 
