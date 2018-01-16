@@ -9,10 +9,14 @@ const style = {
 };
 
 const Move = props => {
-    const { symbol, onMoveClick } = props;
+    const { symbol, onMoveClick, gameFinished, isWonMove } = props;
 
     return (
-        <div style={style} onClick={onMoveClick}>
+        <div style={{
+            ...style,
+            cursor: gameFinished ? 'not-allowed' : 'pointer',
+            backgroundColor: isWonMove ? 'green' : 'white'
+        }} className={isWonMove ? 'won' : ''} onClick={onMoveClick}>
             {symbol}
         </div>
     );

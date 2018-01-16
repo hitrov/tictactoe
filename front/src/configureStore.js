@@ -13,9 +13,8 @@ const configureStore = () => {
         diff: true,
     }));
 
-    const persistedState = loadState() || {
-        recents: [],
-    };
+    const persistedState = loadState() || {};
+    persistedState.recents = [];
 
     const store = createStore(
         reducer,

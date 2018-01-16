@@ -5,13 +5,15 @@ import Move from '../components/Move';
 
 class MoveContainer extends Component {
     render(){
-        const { gameId, postMove, action, symbol } = this.props;
+        const { gameId, postMove, action, symbol, gameFinished, isWonMove } = this.props;
 
         return (
             <Move
                 action={action}
                 symbol={symbol}
-                onMoveClick={() => postMove(gameId, action)}
+                gameFinished={gameFinished}
+                onMoveClick={() => !gameFinished && postMove(gameId, action)}
+                isWonMove={isWonMove}
             />
         );
     }
@@ -19,14 +21,18 @@ class MoveContainer extends Component {
 
 MoveContainer = connect((state, ownProps) => {
     const { game, xId } = state;
-    const gameId = game ? game.game_id : null;
     const { action } = ownProps;
 
-    let symbol;
-    if (gameId) {
+    let isWonMove = false, symbol, movePlayerId;
+    if (game) {
         const move = game.moves.find(move => parseInt(move.action, 10) === action);
-        let movePlayerId = '';
         if (move) {
+            const winnerMoves = game.moves
+                .filter(move => move.player_id === game.player_id_won)
+                .map(move => parseInt(move.action, 10));
+
+            isWonMove = winnerMoves.indexOf(action) !== -1;
+
             movePlayerId = parseInt(move.player_id, 10);
             symbol = movePlayerId === xId
                 ? 'X'
@@ -37,7 +43,9 @@ MoveContainer = connect((state, ownProps) => {
     return {
         action,
         symbol,
-        gameId,
+        gameId: game ? game.game_id: null,
+        gameFinished: game && game.player_id_won,
+        isWonMove,
     };
 }, {
     postMove,
