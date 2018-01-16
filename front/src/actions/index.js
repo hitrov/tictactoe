@@ -5,17 +5,18 @@ const move = move => ({
     move: move,
 });
 
-const addRecentGame = (playerIdWon, dt) => ({
+const addRecentGame = (playerIdWon, dt, draw) => ({
     type: 'ADD_RECENT_GAME',
     playerIdWon,
     dt,
+    draw,
 });
 
 export const postMove = (gameId, action) => dispatch =>
     api.move(gameId, action).then(m => {
 
-        if (m.player_id_won) {
-            dispatch(addRecentGame(m.player_id_won, m.dt));
+        if (m.player_id_won || m.draw) {
+            dispatch(addRecentGame(m.player_id_won, m.dt, m.draw));
         }
 
         dispatch(move(m));

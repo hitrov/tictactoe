@@ -11,6 +11,7 @@ use TicTacToe\Exceptions\Action_already_exists;
 use TicTacToe\Exceptions\Game_not_found;
 use TicTacToe\Exceptions\Player_win;
 use TicTacToe\Exceptions\Game_already_finished;
+use TicTacToe\Exceptions\Draw;
 
 use TicTacToe\Exceptions\HTTP\Internal_server_error;
 
@@ -117,6 +118,10 @@ class Move_model extends MY_Model {
         $move_id = $this->db->insert_id();
 
         $this->check_win($game_id, $player_id, $move_id);
+
+        if (count($moves) + 1 == 9) {
+            throw new Draw($move_id);
+        }
 
         return $move_id;
     }

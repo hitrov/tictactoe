@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import PlayingField from './PlayingField';
 import { Link } from 'react-router-dom';
 import History from './History';
+import { FormGroup } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
+import { ButtonToolbar } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class App extends Component {
     render() {
@@ -12,21 +16,28 @@ class App extends Component {
             <div>
                 <Link to="/history">History</Link>
 
-                <input onChange={ onPlayer1NameChange } value={player1Name} />
-                <input onChange={ onPlayer2NameChange } value={player2Name} />
+                <FormGroup>
+                    <FormControl onChange={ onPlayer1NameChange } value={player1Name} />
+                    <FormControl onChange={ onPlayer2NameChange } value={player2Name} />
 
-                <button
-                onClick={onCreateGameClick}
-                >
-                Create Players
-                </button>
+                    <ButtonToolbar>
 
-                {player1Id !== undefined && player2Id !== undefined &&
-                <button
-                onClick={() => postGame(player1Id, player2Id)}
-                >
-                Create Game
-                </button>}
+                    </ButtonToolbar>
+
+                    <Button
+                        onClick={onCreateGameClick}
+                    >
+                        Create Players
+                    </Button>
+
+                    {player1Id !== undefined && player2Id !== undefined &&
+                    <Button
+                        bsStyle="primary"
+                        onClick={() => postGame(player1Id, player2Id)}
+                    >
+                        Create Game
+                    </Button>}
+                </FormGroup>
 
                 {gameId !== null &&
                 <PlayingField />}

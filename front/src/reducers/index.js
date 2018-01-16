@@ -1,3 +1,5 @@
+import { MAX_RECENTS } from '../constants';
+
 const reducer = (state = {}, action) => {
     switch (action.type) {
         case 'MOVE':
@@ -61,12 +63,18 @@ const reducer = (state = {}, action) => {
                 ...state.game,
                 player_id_won: action.playerIdWon,
                 finished: action.dt,
+                draw: action.draw,
             };
+
+            const recents = [...state.recents];
+            if (recents.length === MAX_RECENTS) {
+                recents.splice(-1, 1)
+            }
 
             return {
                 ...state,
                 game,
-                recents: [...state.recents, game],
+                recents: [game, ...recents],
             };
 
         default:

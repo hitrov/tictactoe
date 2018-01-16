@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use TicTacToe\Exceptions\Player_win;
 use TicTacToe\Exceptions\Game_already_finished;
+use TicTacToe\Exceptions\Draw;
 
 use TicTacToe\Exceptions\HTTP\Base_http_exception;
 
@@ -46,6 +47,13 @@ class Move extends MY_Controller {
                 $move_id = $e->getMessage();
                 $move = $this->move_model->get($move_id);
                 $move['player_id_won'] = $move['player_id'];
+                $this->response = $move;
+            }
+            catch(Draw $e) {
+                $move_id = $e->getMessage();
+                $move = $this->move_model->get($move_id);
+                $move['player_id_won'] = null;
+                $move['draw'] = true;
                 $this->response = $move;
             }
         } else {

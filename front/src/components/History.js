@@ -1,5 +1,6 @@
 import React from 'react';
 import HistoryGameItem from './HistoryGameItem';
+import { Table } from 'react-bootstrap';
 
 const History = props => {
     const { history, isRecents } = props;
@@ -12,21 +13,21 @@ const History = props => {
     }
 
     return (
-        <table>
+        <Table responsive striped bordered condensed hover>
             <thead>
-            <tr>
-                <th>Game ID</th>
-                <th>Player 1</th>
-                <th>Player 2</th>
-                <th>Moves</th>
-                <th>Finished</th>
-            </tr>
+                <tr>
+                    <th>Game ID</th>
+                    <th>Player 1</th>
+                    <th>Player 2</th>
+                    <th>Moves</th>
+                    <th>Finished</th>
+                </tr>
             </thead>
             <tbody>
             {history.map(item =>
                 <HistoryGameItem key={item.game_id} item={item} />)}
             </tbody>
-        </table>
+        </Table>
     );
 };
 

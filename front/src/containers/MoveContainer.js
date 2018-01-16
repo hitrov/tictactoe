@@ -30,7 +30,7 @@ MoveContainer = connect((state, ownProps) => {
         action,
         symbol,
         gameId: game ? game.game_id: null,
-        gameFinished: game && game.player_id_won,
+        gameFinished: game && (game.player_id_won || game.draw),
         isWonMove,
     };
 }, {
