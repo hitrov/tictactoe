@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postMove } from '../actions';
+import { postMove, getIsWonMove, getSymbol } from '../actions';
 import Move from '../components/Move';
 
 class MoveContainer extends Component {
@@ -23,22 +23,8 @@ MoveContainer = connect((state, ownProps) => {
     const { game, xId } = state;
     const { action } = ownProps;
 
-    let isWonMove = false, symbol, movePlayerId;
-    if (game) {
-        const move = game.moves.find(move => parseInt(move.action, 10) === action);
-        if (move) {
-            const winnerMoves = game.moves
-                .filter(move => move.player_id === game.player_id_won)
-                .map(move => parseInt(move.action, 10));
-
-            isWonMove = winnerMoves.indexOf(action) !== -1;
-
-            movePlayerId = parseInt(move.player_id, 10);
-            symbol = movePlayerId === xId
-                ? 'X'
-                : 'O';
-        }
-    }
+    const isWonMove = getIsWonMove(game, action);
+    const symbol = getSymbol(game, action, xId);
 
     return {
         action,

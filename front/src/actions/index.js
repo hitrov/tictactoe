@@ -64,3 +64,42 @@ const setHistory = response => ({
 export const fetchHistory = () => dispatch => {
     api.getHistory().then(response => dispatch(setHistory(response)));
 };
+
+export const getIsWonMove = (game, action) => {
+    let isWonMove = false;
+    if (!game) {
+        return isWonMove;
+    }
+
+    const move = game.moves.find(move => parseInt(move.action, 10) === action);
+    if (!move) {
+        return isWonMove;
+    }
+
+    const winnerMoves = game.moves
+        .filter(move => move.player_id === game.player_id_won)
+        .map(move => parseInt(move.action, 10));
+
+    isWonMove = winnerMoves.indexOf(action) !== -1;
+
+    return isWonMove;
+};
+
+export const getSymbol = (game, action, xId) => {
+    let symbol = '';
+    if (!game) {
+        return symbol;
+    }
+
+    const move = game.moves.find(move => parseInt(move.action, 10) === action);
+    if (!move) {
+        return symbol;
+    }
+
+    const movePlayerId = parseInt(move.player_id, 10);
+    symbol = movePlayerId === xId
+        ? 'X'
+        : 'O';
+
+    return symbol;
+};
