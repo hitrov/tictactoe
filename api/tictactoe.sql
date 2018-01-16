@@ -1,109 +1,134 @@
--- MySQL dump 10.13  Distrib 5.7.20, for macos10.12 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 4.7.7
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1    Database: tictactoe
--- ------------------------------------------------------
--- Server version	5.7.20
+-- Host: localhost
+-- Generation Time: Jan 16, 2018 at 06:58 AM
+-- Server version: 5.7.20
+-- PHP Version: 7.0.25
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tictactoe`
+--
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `game`
 --
 
-DROP TABLE IF EXISTS `game`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `player_1` int(10) unsigned NOT NULL,
-  `player_2` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `player_1` (`player_1`),
-  KEY `player_2` (`player_2`),
-  CONSTRAINT `game_ibfk_1` FOREIGN KEY (`player_1`) REFERENCES `player` (`id`),
-  CONSTRAINT `game_ibfk_2` FOREIGN KEY (`player_2`) REFERENCES `player` (`id`)
+  `id` int(10) UNSIGNED NOT NULL,
+  `player_1` int(10) UNSIGNED NOT NULL,
+  `player_2` int(10) UNSIGNED NOT NULL,
+  `player_id_won` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `game`
---
-
-LOCK TABLES `game` WRITE;
-/*!40000 ALTER TABLE `game` DISABLE KEYS */;
-/*!40000 ALTER TABLE `game` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `move`
 --
 
-DROP TABLE IF EXISTS `move`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `move` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `game_id` int(10) unsigned NOT NULL,
-  `player_id` int(10) unsigned NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
+  `game_id` int(10) UNSIGNED NOT NULL,
+  `player_id` int(10) UNSIGNED NOT NULL,
   `action` enum('1','2','3','4','5','6','7','8','9') NOT NULL,
-  `dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `game_id` (`game_id`),
-  KEY `player_id` (`player_id`),
-  CONSTRAINT `move_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
-  CONSTRAINT `move_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`)
+  `dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `move`
---
-
-LOCK TABLES `move` WRITE;
-/*!40000 ALTER TABLE `move` DISABLE KEYS */;
-/*!40000 ALTER TABLE `move` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `player`
 --
 
-DROP TABLE IF EXISTS `player`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `player` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `player`
+-- Indexes for dumped tables
 --
 
-LOCK TABLES `player` WRITE;
-/*!40000 ALTER TABLE `player` DISABLE KEYS */;
-INSERT INTO `player` VALUES (1,'sasha'),(2,'tanya');
-/*!40000 ALTER TABLE `player` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Indexes for table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `player_1` (`player_1`),
+  ADD KEY `player_2` (`player_2`),
+  ADD KEY `player_id_won` (`player_id_won`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for table `move`
+--
+ALTER TABLE `move`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `player_id` (`player_id`);
+
+--
+-- Indexes for table `player`
+--
+ALTER TABLE `player`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `game`
+--
+ALTER TABLE `game`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `move`
+--
+ALTER TABLE `move`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `player`
+--
+ALTER TABLE `player`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `game`
+--
+ALTER TABLE `game`
+  ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`player_1`) REFERENCES `player` (`id`),
+  ADD CONSTRAINT `game_ibfk_2` FOREIGN KEY (`player_2`) REFERENCES `player` (`id`),
+  ADD CONSTRAINT `game_ibfk_3` FOREIGN KEY (`player_id_won`) REFERENCES `player` (`id`);
+
+--
+-- Constraints for table `move`
+--
+ALTER TABLE `move`
+  ADD CONSTRAINT `move_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
+  ADD CONSTRAINT `move_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-01-13 21:09:49

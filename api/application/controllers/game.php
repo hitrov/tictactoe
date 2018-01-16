@@ -3,7 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Game extends MY_Controller {
 
-    protected $available_methods = ['POST'];
+    const HISTORY_LIMIT = 50;
+
+    protected $available_methods = ['GET', 'POST'];
 
     public function __construct() {
         parent::__construct();
@@ -31,4 +33,13 @@ class Game extends MY_Controller {
 
         $this->send_response();
 	}
+
+    public function history() {
+        if ($this->processed) {
+            return;
+        }
+
+        $this->response = $this->game_model->history();
+        $this->send_response();
+    }
 }

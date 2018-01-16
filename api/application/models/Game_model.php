@@ -34,9 +34,73 @@ class Game_model extends MY_Model {
             ->where([
                 'id' => $game_id,
             ])
-            ->where("(player_1 = $player_id OR player_2 = $player_id)", null, false)
+            ->where("(`player_1` = '$player_id' OR `player_2` = '$player_id')", null, false)
             ->update($this->table_name, [
                 'player_id_won' => $player_id,
             ]);
+    }
+
+    private function process_history(array $result): array {
+        $history = [];
+        foreach ($result as $row) {
+
+            $game_id = $row['game_id'];
+
+            $move = [
+                'player_id' => $row['player_id'],
+                'action' => $row['player_id'],
+                'dt' => $row['dt'],
+            ];
+
+            if (empty($history[$game_id])) {
+                $history[$game_id] = [
+                    'player_1' => [
+                        'id' => $row['player_1'],
+                        'name' => $row['player_1_name'],
+                    ],
+                    'player_2' => [
+                        'id' => $row['player_2'],
+                        'name' => $row['player_2_name'],
+                    ],
+                    'player_id_won' => $row['player_id_won'],
+                    'moves' => [],
+                ];
+            }
+
+            $history[$game_id]['moves'][$row['move_id']] = $move;
+        }
+
+        foreach ($history as $game_id => $game) {
+            if ($game['player_id_won'] && !empty($game['moves'])) {
+                $history[$game_id]['finished'] = end($history[$game_id]['moves'])['dt'];
+            }
+        }
+
+        return $history;
+    }
+
+    public function history(int $player_id = null, int $offset = 0, int $limit = 50): array {
+        $this->db
+            ->select('game_id, (SELECT player.name FROM player WHERE id = game.`player_1`) as player_1_name, '.
+                                    '(SELECT player.name FROM player WHERE id = game.`player_2`) as player_2_name, '.
+                                    'player_1, player_2, player_id_won, move.id as move_id, move.player_id, action, dt')
+            ->join('move', 'game.id = move.game_id')
+            ->limit($limit);
+
+        if ($offset) {
+            $this->db->offset($offset);
+        }
+
+        if ($player_id) {
+            $this->db->where('player_id', $player_id);
+        }
+
+        $result = $this->db
+            ->get_where($this->table_name, null, false)
+            ->result_array();
+
+        $history = $this->process_history($result);
+
+        return $history;
     }
 }
