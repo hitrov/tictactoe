@@ -5,7 +5,7 @@ import { Table } from 'react-bootstrap';
 const History = props => {
     const { history, isRecents } = props;
 
-    if (!history || !history.length) {
+    if (!history) {
         if (isRecents) {
             return null;
         }
