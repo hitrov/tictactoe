@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Game extends MY_Controller {
 
+    const VERIFY_JWT = true;
+
     const HISTORY_LIMIT = 50;
 
     protected $available_methods = ['GET', 'POST'];
@@ -10,7 +12,7 @@ class Game extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->library('game_form');
+        $this->load->library('jwtoken');
         $this->load->model('game_model');
     }
 
@@ -19,17 +21,18 @@ class Game extends MY_Controller {
             return;
         }
 
-        $game_form = new Game_form();
-        if ($game_form->run()) {
-            $player_1_id = $this->input->post('player_1');
-            $player_2_id = $this->input->post('player_2');
+        $token_payload = $this->jwtoken->getRequestPayload();
 
-            $game_id = $this->game_model->create($player_1_id, $player_2_id);
+        $player_1_id = $token_payload['player_1'];
+        $player_2_id = $token_payload['player_2'];
 
-            $this->response = $this->game_model->get($game_id);
-        } else {
-            $this->errors = $game_form->error_array();
-        }
+        $game_id = $this->game_model->create($player_1_id, $player_2_id);
+
+        $this->jwtoken->setPayload([
+            'game_id' => $game_id,
+        ]);
+
+        $this->response = $this->game_model->get($game_id);
 
         $this->send_response();
 	}
@@ -39,7 +42,12 @@ class Game extends MY_Controller {
             return;
         }
 
-        $this->response = $this->game_model->history();
+        $token_payload = $this->jwtoken->getRequestPayload();
+
+        $player_1_id = $token_payload['player_1'];
+        $player_2_id = $token_payload['player_2'];
+
+        $this->response = $this->game_model->history($player_1_id, $player_2_id);
         $this->send_response();
     }
 }

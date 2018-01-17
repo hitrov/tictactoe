@@ -2,9 +2,10 @@
 
 use TicTacToe\Exceptions\HTTP\Method_not_allowed;
 use TicTacToe\Exceptions\HTTP\Base_http_exception;
-use TicTacToe\Exceptions\HTTP\Not_found;
 
 class MY_Controller extends CI_Controller {
+
+    const VERIFY_JWT = false;
 
     protected $errors;
 
@@ -17,7 +18,7 @@ class MY_Controller extends CI_Controller {
     protected $headers = [
         'Access-Control-Allow-Origin' => 'http://localhost:3000',
         self::HEADER_ACCESS_CONTROL_ALLOW_METHODS => [],
-        self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type'],
+        self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type', 'Authorization'],
         self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true',
     ];
 
@@ -30,6 +31,7 @@ class MY_Controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
+        $this->load->library('jwtoken');
         if ($this->input->method(true) == 'OPTIONS') {
             $this->send_response();
             return;
@@ -42,6 +44,10 @@ class MY_Controller extends CI_Controller {
                     'Available methods: ' . implode(', ',  $this->available_methods);
 
                 throw new Method_not_allowed($available_methods_list);
+            }
+
+            if (static::VERIFY_JWT) {
+                $this->jwtoken->verifyToken();
             }
 
             $this->load->database();
@@ -61,8 +67,18 @@ class MY_Controller extends CI_Controller {
                 $value;
 
             $header_value = $name . ': ' . $header;
-            header($header_value);
+            $this->output->set_header($header_value);
         }
+    }
+
+    private function addBearerToken(&$response) {
+        $bearerToken = $this->jwtoken->getToken();
+        if (empty($bearerToken)) {
+            return;
+        }
+
+        //$response['bearer_token'] = $bearerToken;
+        $this->output->set_header('X-Bearer-Authorization: ' . $bearerToken);
     }
 
     protected function send_response() {
@@ -79,6 +95,7 @@ class MY_Controller extends CI_Controller {
             ];
         }
 
+        $this->addBearerToken($response);
         $this->output->set_output(json_encode($response));
         $this->processed = true;
     }

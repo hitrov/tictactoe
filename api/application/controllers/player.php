@@ -8,6 +8,7 @@ class Player extends MY_Controller {
     public function __construct() {
         parent::__construct();
 
+        $this->load->library('jwtoken');
         $this->load->library('player_form');
         $this->load->model('player_model');
     }
@@ -22,6 +23,11 @@ class Player extends MY_Controller {
         if ($player_form->run()) {
             $player_1_id = $this->player_model->create($this->input->post('player_1'));
             $player_2_id = $this->player_model->create($this->input->post('player_2'));
+
+            $this->jwtoken->setPayload([
+                'player_1' => $player_1_id,
+                'player_2' => $player_2_id,
+            ]);
 
             $this->response = [
                 'player_1' => $player_1_id,

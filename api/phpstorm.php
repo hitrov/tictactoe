@@ -69,6 +69,7 @@ die('This file is used for development purposes only.');
  * @property Player_model            $player_model
  * @property Game_model            $game_model
  * @property Move_model            $move_model
+ * @property Jwtoken            $jwtoken
  *
  */
 class CI_Controller {
@@ -127,6 +128,7 @@ class CI_Controller {
  * @property Player_model          $player_model
  * @property Game_model            $game_model
  * @property Move_model            $move_model
+ * @property Jwtoken            $jwtoken
  */
 class CI_Model {
 

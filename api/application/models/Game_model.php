@@ -83,21 +83,19 @@ class Game_model extends MY_Model {
         return $ordered_history;
     }
 
-    public function history(int $player_id = null, int $offset = 0, int $limit = 50): array {
+    public function history(int $player_1_id, int $player_2_id, int $offset = 0, int $limit = 50): array {
         $this->db
             ->select('game_id, (SELECT player.name FROM player WHERE id = game.`player_1`) as player_1_name, '.
                                     '(SELECT player.name FROM player WHERE id = game.`player_2`) as player_2_name, '.
                                     'player_1, player_2, player_id_won, move.id as move_id, move.player_id, action, dt')
             ->join('move', 'game.id = move.game_id')
             ->order_by('game_id', 'DESC')
+            ->where('player_1', $player_1_id)
+            ->where('player_2', $player_2_id)
             ->limit($limit);
 
         if ($offset) {
             $this->db->offset($offset);
-        }
-
-        if ($player_id) {
-            $this->db->where('player_id', $player_id);
         }
 
         $result = $this->db

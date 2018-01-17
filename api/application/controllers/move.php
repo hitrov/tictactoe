@@ -9,11 +9,14 @@ use TicTacToe\Exceptions\HTTP\Base_http_exception;
 
 class Move extends MY_Controller {
 
+    const VERIFY_JWT = true;
+
     protected $available_methods = ['POST'];
 
     public function __construct() {
         parent::__construct();
 
+        $this->load->library('jwtoken');
         $this->load->library('move_form');
         $this->load->model('move_model');
         $this->load->model('game_model');
@@ -27,8 +30,10 @@ class Move extends MY_Controller {
 
         $move_form = new Move_form();
         if ($move_form->run()) {
-            $game_id = $this->input->post('game_id');
             $action = $this->input->post('action');
+
+            $token_payload = $this->jwtoken->getRequestPayload();
+            $game_id = $token_payload['game_id'];
 
             try {
                 $move_id = $this->move_model->create($game_id, $action);
