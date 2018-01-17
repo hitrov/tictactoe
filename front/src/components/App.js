@@ -33,7 +33,7 @@ class App extends Component {
                     {player1Id !== undefined && player2Id !== undefined &&
                     <Button
                         bsStyle="primary"
-                        onClick={() => postGame(player1Id, player2Id)}
+                        onClick={() => postGame()}
                     >
                         Create Game
                     </Button>}

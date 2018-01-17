@@ -47,7 +47,9 @@ class Game extends MY_Controller {
         $player_1_id = $token_payload['player_1'];
         $player_2_id = $token_payload['player_2'];
 
-        $this->response = $this->game_model->history($player_1_id, $player_2_id);
+        $this->response = [
+            'history' => $this->game_model->history($player_1_id, $player_2_id),
+        ];
         $this->send_response();
     }
 }

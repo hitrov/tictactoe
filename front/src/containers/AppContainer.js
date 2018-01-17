@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postMove, setPlayerNames, postCreatePlayers, postGame } from '../actions';
+import { setPlayerNames, postCreatePlayers, postGame } from '../actions';
 import { withRouter } from 'react-router-dom';
 import App from '../components/App';
 
@@ -67,7 +67,6 @@ AppContainer = withRouter(connect(state => {
         recents,
     }
 }, {
-    postMove,
     setPlayerNames,
     postCreatePlayers,
     postGame,

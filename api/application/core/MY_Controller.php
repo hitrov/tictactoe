@@ -77,8 +77,7 @@ class MY_Controller extends CI_Controller {
             return;
         }
 
-        //$response['bearer_token'] = $bearerToken;
-        $this->output->set_header('X-Bearer-Authorization: ' . $bearerToken);
+        $response['bearer_token'] = $bearerToken;
     }
 
     protected function send_response() {

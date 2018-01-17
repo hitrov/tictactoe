@@ -15,7 +15,7 @@ class Jwtoken {
     /**
      * @var array
      */
-    private $payload;
+    private $payload = [];
 
     /**
      * @var array

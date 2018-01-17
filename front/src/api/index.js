@@ -6,42 +6,40 @@ import {
     API_HISTORY_URL,
 } from '../constants';
 
-const callApi = (url, method, body, headers) => {
+const callApi = (url, method, body, bearerToken = null) => {
     url = API_BASE_URL+url;
 
-    let requiredHeaders = {};
+    const headers = {};
+    if (bearerToken) {
+        headers['Authorization'] = 'Bearer '+bearerToken;
+    }
+
     if (body) {
-        var form = new FormData();
+        const form = new FormData();
         Object.keys(body).forEach((val) => {
             form.append(val, body[val])
         });
         body = form;
     }
 
-    if (headers) {
-        requiredHeaders = Object.assign({}, headers, requiredHeaders);
-    }
-
     return fetch(url, {
         method: method,
-        headers: requiredHeaders,
+        headers,
         body: body,
         credentials: 'include',
-    })
-        .then(response => {
-            // debugger;
-            return response.json();
-        })
-        .catch(function (error) {
-            console.log('Request failed', error);
-        });
+    }).then(response => response.json()
+        .then(json => {
+            if (!response.ok) {
+                return Promise.reject(json)
+            }
+            return json;
+        }));
 };
 
-export const move = (gameId, action) =>
+export const move = (action, bearerToken) =>
     callApi(API_MOVE_URL, "POST", {
-        'game_id': gameId,
         action,
-    });
+    }, bearerToken);
 
 export const createPlayers = (player1Name, player2Name) =>
     callApi(API_CREATE_PLAYERS_URL, "POST", {
@@ -49,11 +47,9 @@ export const createPlayers = (player1Name, player2Name) =>
         'player_2': player2Name,
     });
 
-export const createGame = (player1Id, player2Id) =>
+export const createGame = bearerToken =>
     callApi(API_GAME_URL, "POST", {
-        'player_1': player1Id,
-        'player_2': player2Id,
-    });
+    }, bearerToken);
 
-export const getHistory = () =>
-    callApi(API_HISTORY_URL, "GET");
+export const getHistory = bearerToken =>
+    callApi(API_HISTORY_URL, "GET", null, bearerToken);

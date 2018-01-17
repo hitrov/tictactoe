@@ -2,7 +2,7 @@ import { MAX_RECENTS } from '../constants';
 
 const reducer = (state = {}, action) => {
     switch (action.type) {
-        case 'MOVE':
+        case 'POST_MOVE_SUCCESS':
             return {
                 ...state,
                 game: {
@@ -18,7 +18,7 @@ const reducer = (state = {}, action) => {
                 player2Name: action.player2Name,
             };
 
-        case 'CREATE_PLAYERS':
+        case 'POST_CREATE_PLAYERS_SUCCESS':
             return {
                 ...state,
                 player1Id: action.player1Id,
@@ -32,7 +32,7 @@ const reducer = (state = {}, action) => {
                 oId: action.oId,
             };
 
-        case 'GAME':
+        case 'POST_CREATE_GAME_SUCCESS':
             const { player1Name, player2Name } = state;
             const { gameId, player1Id, player2Id } = action;
 
@@ -52,10 +52,10 @@ const reducer = (state = {}, action) => {
                 },
             };
 
-        case 'SET_HISTORY':
+        case 'FETCH_HISTORY_SUCCESS':
             return {
                 ...state,
-                history: action.response,
+                history: action.history,
             };
 
         case 'ADD_RECENT_GAME':
@@ -76,6 +76,12 @@ const reducer = (state = {}, action) => {
                 ...state,
                 game,
                 recents: [game, ...recents],
+            };
+
+        case 'SET_BEARER_TOKEN':
+            return {
+                ...state,
+                bearerToken: action.bearerToken,
             };
 
         default:
