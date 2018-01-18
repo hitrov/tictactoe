@@ -11,7 +11,7 @@ const style = {
 };
 
 const Move = props => {
-    const { symbol, onMoveClick, gameFinished, isWonMove } = props;
+    const { symbol, onMoveClick, gameFinished, isWonMove, isMoveDone } = props;
 
     return (
         <Col
@@ -21,7 +21,7 @@ const Move = props => {
             lg={4}
             style={{
             ...style,
-            cursor: gameFinished ? 'not-allowed' : 'pointer',
+            cursor: gameFinished || isMoveDone ? 'not-allowed' : 'pointer',
             backgroundColor: isWonMove ? 'green' : 'white'
         }} className={isWonMove ? 'won' : ''} onClick={onMoveClick}>
             {symbol}

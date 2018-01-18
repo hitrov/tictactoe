@@ -45,6 +45,7 @@ class Move extends MY_Controller {
                     'finished' => true,
                     'player_id' => $e->getMessage(),
                 ];
+
             } catch(Base_http_exception $e) {
                 $this->http_code = $e->get_http_code();
                 $this->errors[] = $e->getMessage();
@@ -56,8 +57,8 @@ class Move extends MY_Controller {
                 $move['player_id_won'] = $move['player_id'];
                 $move['won_combination'] = unserialize($game['won_combination']);
                 $this->response = $move;
-            }
-            catch(Draw $e) {
+
+            } catch(Draw $e) {
                 $move_id = $e->getMessage();
                 $move = $this->move_model->get($move_id);
                 $move['player_id_won'] = null;

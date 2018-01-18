@@ -5,7 +5,7 @@ import Move from '../components/Move';
 
 class MoveContainer extends Component {
     render(){
-        const { postMove, action, symbol, gameFinished, isWonMove } = this.props;
+        const { postMove, action, symbol, gameFinished, isWonMove, isMoveDone } = this.props;
 
         return (
             <Move
@@ -14,6 +14,7 @@ class MoveContainer extends Component {
                 gameFinished={gameFinished}
                 onMoveClick={() => !gameFinished && postMove(action)}
                 isWonMove={isWonMove}
+                isMoveDone={isMoveDone}
             />
         );
     }
@@ -24,12 +25,14 @@ MoveContainer = connect((state, ownProps) => {
     const { action } = ownProps;
 
     const symbol = getSymbol(game, action, xId);
+    const isMoveDone = game && game.moves.length && game.moves.find(m => parseInt(m.action, 10) === action);
 
     return {
         action,
         symbol,
         gameFinished: game && (game.draw || (game.player_id_won && game.won_combination)),
         isWonMove: game.won_combination && game.won_combination.indexOf(action) !== -1,
+        isMoveDone,
     };
 }, {
     postMove,
