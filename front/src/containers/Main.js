@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 import AppContainer from './AppContainer';
 import HistoryContainer from "./HistoryContainer";
 import NotFound from "../components/NotFound";
+import { dismissError } from '../actions';
 import {
     Route,
     Switch,
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Alert } from 'react-bootstrap';
 
 class Main extends Component {
     constructor(props) {
@@ -22,8 +23,14 @@ class Main extends Component {
     }
 
     render(){
+        const { error, dismissError } = this.props;
+
         return (
             <div>
+                {error &&
+                <Alert bsStyle="danger" onDismiss={dismissError}>
+                    <h4>{error}</h4>
+                </Alert>}
                 <Navbar onSelect={this.onSelectTab}>
                     <Nav>
                         <NavItem eventKey={'/'}>
@@ -44,6 +51,10 @@ class Main extends Component {
     }
 }
 
-Main = withRouter(connect()(Main));
+Main = withRouter(connect(state => ({
+    error: state.errorMessage,
+}), {
+    dismissError,
+})(Main));
 
 export default Main;

@@ -158,3 +158,8 @@ const handleFetchError = (error, dispatch, actionType) => {
         // event,
     });
 };
+
+export const dismissError = () => dispatch =>
+    dispatch({
+        type: 'DISMISS_ERROR',
+    });

@@ -104,6 +104,13 @@ const reducer = (state = {}, action) => {
             return {
                 ...state,
                 isFetching: false,
+                errorMessage: action.message,
+            };
+
+        case 'DISMISS_ERROR':
+            return {
+                ...state,
+                errorMessage: '',
             };
 
         default:
