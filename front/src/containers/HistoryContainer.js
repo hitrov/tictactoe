@@ -21,6 +21,7 @@ class HistoryContainer extends Component {
 
 HistoryContainer = withRouter(connect(state => ({
     history: state.history,
+    isFetching: state.isFetching,
 }), {
     fetchHistory,
 })(HistoryContainer));

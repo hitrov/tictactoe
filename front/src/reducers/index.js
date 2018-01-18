@@ -9,6 +9,7 @@ const reducer = (state = {}, action) => {
                     ...state.game,
                     moves: [...state.game.moves, action.move],
                 },
+                isFetching: false,
             };
 
         case 'SET_PLAYER_NAMES':
@@ -23,6 +24,7 @@ const reducer = (state = {}, action) => {
                 ...state,
                 player1Id: action.player1Id,
                 player2Id: action.player2Id,
+                isFetching: false,
             };
 
         case 'SET_X_O':
@@ -50,12 +52,14 @@ const reducer = (state = {}, action) => {
                     },
                     moves: [],
                 },
+                isFetching: false,
             };
 
         case 'FETCH_HISTORY_SUCCESS':
             return {
                 ...state,
                 history: action.history,
+                isFetching: false,
             };
 
         case 'ADD_RECENT_GAME':
@@ -82,6 +86,24 @@ const reducer = (state = {}, action) => {
             return {
                 ...state,
                 bearerToken: action.bearerToken,
+            };
+
+        case 'POST_MOVE_REQUEST':
+        case 'POST_CREATE_PLAYERS_REQUEST':
+        case 'POST_CREATE_GAME_REQUEST':
+        case 'FETCH_HISTORY_REQUEST':
+            return {
+                ...state,
+                isFetching: true,
+            };
+
+        case 'POST_MOVE_FAILURE':
+        case 'POST_CREATE_PLAYERS_FAILURE':
+        case 'POST_CREATE_GAME_FAILURE':
+        case 'FETCH_HISTORY_FAILURE':
+            return {
+                ...state,
+                isFetching: false,
             };
 
         default:

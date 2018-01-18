@@ -15,6 +15,7 @@ const Move = props => {
 
     return (
         <Col
+            xs={4}
             sm={4}
             md={4}
             lg={4}

@@ -1,15 +1,16 @@
 import React from 'react';
 import HistoryGameItem from './HistoryGameItem';
-import { Table } from 'react-bootstrap';
+import { Table, ProgressBar } from 'react-bootstrap';
 
 const History = props => {
-    const { history, isRecents } = props;
+    const { history, isRecents, isFetching } = props;
 
-    if (!history) {
-        if (isRecents) {
-            return null;
-        }
-        return <h1>Loading...</h1>;
+    if (isRecents) {
+        return null;
+    }
+
+    if (isFetching) {
+        return <ProgressBar active now={100} />;
     }
 
     return (
