@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setPlayerNames, postCreatePlayers, postGame } from '../actions';
-import { withRouter } from 'react-router-dom';
 import App from '../components/App';
 
 class AppContainer extends Component {
@@ -54,7 +53,7 @@ class AppContainer extends Component {
     }
 }
 
-AppContainer = withRouter(connect(state => {
+AppContainer = connect(state => {
     const { player1Id, player2Id, game, recents, player1Name, player2Name } = state;
     const gameId = game ? game.game_id : null;
 
@@ -70,6 +69,6 @@ AppContainer = withRouter(connect(state => {
     setPlayerNames,
     postCreatePlayers,
     postGame,
-})(AppContainer));
+})(AppContainer);
 
 export default AppContainer;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchHistory } from '../actions';
-import { withRouter } from 'react-router-dom';
 import History from '../components/History';
 
 class HistoryContainer extends Component {
@@ -19,11 +18,11 @@ class HistoryContainer extends Component {
     }
 }
 
-HistoryContainer = withRouter(connect(state => ({
+HistoryContainer = connect(state => ({
     history: state.history,
     isFetching: state.isFetching,
 }), {
     fetchHistory,
-})(HistoryContainer));
+})(HistoryContainer);
 
 export default HistoryContainer;
