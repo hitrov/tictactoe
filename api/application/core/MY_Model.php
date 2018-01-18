@@ -9,6 +9,11 @@
 class MY_Model extends CI_Model {
     public $table_name = '';
 
+    /**
+     * @param int $id
+     *
+     * @return array
+     */
     public function get(int $id) {
         return $this->db
             ->limit(1)

@@ -40,15 +40,15 @@ class Move extends MY_Controller {
 
                 $this->response = $this->move_model->get($move_id);
 
-            } catch(Base_http_exception $e) {
-                $this->http_code = $e->get_http_code();
-                $this->errors[] = $e->getMessage();
-
             } catch(Game_already_finished $e) {
                 $this->response = [
                     'finished' => true,
                     'player_id' => $e->getMessage(),
                 ];
+            } catch(Base_http_exception $e) {
+                $this->http_code = $e->get_http_code();
+                $this->errors[] = $e->getMessage();
+
             } catch(Player_win $e) {
                 $move_id = $e->getMessage();
                 $move = $this->move_model->get($move_id);

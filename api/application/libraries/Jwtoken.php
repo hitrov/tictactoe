@@ -86,7 +86,6 @@ class Jwtoken {
 
     /**
      * @return string
-     * @throws \Exception
      */
     public function getToken(): string
     {
@@ -98,6 +97,9 @@ class Jwtoken {
         return $jwToken;
     }
 
+    /**
+     * @throws Unauthorized
+     */
     public function verifyToken() {
         if (empty($_SERVER['HTTP_AUTHORIZATION'])) {
             throw new Unauthorized('Token not found.');

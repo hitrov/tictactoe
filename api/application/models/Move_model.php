@@ -52,13 +52,20 @@ class Move_model extends MY_Model {
         return $game['player_1'];
     }
 
-    private function validate(array $game, array $moves, int $action) {
-        if (count($moves) == 9) {
-            throw new Moves_are_off();
-        }
-
+    /**
+     * @param array $moves
+     * @param int $action
+     *
+     * @throws Action_already_exists
+     * @throws Moves_are_off
+     */
+    private function validate(array $moves, int $action) {
         if (empty($moves)) {
             return;
+        }
+
+        if (count($moves) == 9) {
+            throw new Moves_are_off();
         }
 
         $actions = array_column($moves, 'action');
@@ -67,6 +74,14 @@ class Move_model extends MY_Model {
         }
     }
 
+    /**
+     * @param int $game_id
+     * @param int $player_id
+     * @param int $move_id
+     *
+     * @throws Internal_server_error
+     * @throws Player_win
+     */
     private function check_win(int $game_id, int $player_id, int $move_id) {
         $moves = $this->db
             ->order_by('action')
@@ -112,6 +127,19 @@ class Move_model extends MY_Model {
         }
     }
 
+    /**
+     * @param int $game_id
+     * @param int $action
+     *
+     * @return int
+     * @throws Action_already_exists
+     * @throws Draw
+     * @throws Game_already_finished
+     * @throws Game_not_found
+     * @throws Internal_server_error
+     * @throws Moves_are_off
+     * @throws Player_win
+     */
     public function create(int $game_id, int $action): int {
         $game = $this->game_model->get($game_id);
 
@@ -130,7 +158,7 @@ class Move_model extends MY_Model {
             ])
             ->result_array();
 
-        $this->validate($game, $moves, $action);
+        $this->validate($moves, $action);
 
         $player_id = $this->get_current_player_id($moves, $game);
 
