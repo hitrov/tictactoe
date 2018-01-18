@@ -1,10 +1,9 @@
 import React from 'react';
 import Line from './Line';
-import { Grid } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 
 const PlayingField = () =>
-    <Grid>
+    <div>
         <Row className="show-grid">
             <Line line={[1, 2, 3]} />
         </Row>
@@ -14,6 +13,6 @@ const PlayingField = () =>
         <Row className="show-grid">
             <Line line={[7, 8, 9]} />
         </Row>
-    </Grid>;
+    </div>;
 
 export default PlayingField;

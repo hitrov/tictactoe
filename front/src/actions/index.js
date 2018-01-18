@@ -163,3 +163,5 @@ export const dismissError = () => dispatch =>
     dispatch({
         type: 'DISMISS_ERROR',
     });
+
+export const getGameId = state => state.game ? state.game.game_id : null;

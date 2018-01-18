@@ -2,12 +2,11 @@ import React from 'react';
 import { Col } from 'react-bootstrap';
 
 const style = {
-    display: 'inline-block',
-    width: '100px',
-    height: '100px',
+    height: '111px',
     border: '1px black solid',
-    margin: '5px',
-    fontSize: '54pt',
+    fontSize: '86pt',
+    lineHeight: '86pt',
+    textAlign: 'center',
 };
 
 const Move = props => {

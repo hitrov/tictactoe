@@ -13,7 +13,13 @@ const configureStore = () => {
         diff: true,
     }));
 
-    const persistedState = loadState() || {};
+    const persistedState = loadState() || {
+        player1Name: '',
+        player2Name: '',
+        recents: [],
+        history: [],
+    };
+
     persistedState.recents = [];
 
     const store = createStore(
