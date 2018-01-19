@@ -1,32 +1,28 @@
 import React from 'react';
-import { FormGroup, FormControl, Button, ButtonToolbar, Row, Col } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, Row, Col } from 'react-bootstrap';
 
-const Create = ({
-    player1Name, player2Name, onPlayer1NameChange, onPlayer2NameChange,
+const Create = ({player1Name, player2Name, onPlayer1NameChange, onPlayer2NameChange,
                     onCreatePlayersClick, player1Id, player2Id, onCreateGameClick }) =>
 
     <Row className="show-grid">
-        <Col xs={3}>
-            <FormGroup>
-                <FormControl onChange={onPlayer1NameChange} />
-                <FormControl onChange={onPlayer2NameChange} />
-
-                <ButtonToolbar>
-                    <Button
-                        onClick={onCreatePlayersClick}
-                    >
-                        Create Players
-                    </Button>
-
-                    {player1Id !== undefined && player2Id !== undefined &&
-                    <Button
-                        bsStyle="primary"
-                        onClick={onCreateGameClick}
-                    >
-                        Create Game
-                    </Button>}
-                </ButtonToolbar>
-
+        <Col md={12}>
+            <FormGroup className="create-players-form">
+                <ControlLabel className="create-player-form__label">Player 1:</ControlLabel>
+                <FormControl
+                    className="create-player-form__input box-shadow"
+                    onChange={onPlayer1NameChange}
+                />
+                <ControlLabel className="create-player-form__label">Player 2:</ControlLabel>
+                <FormControl
+                    className="create-player-form__input box-shadow"
+                    onChange={onPlayer2NameChange}
+                />
+                <Button
+                    className="create-players-btn box-shadow"
+                    onClick={onCreatePlayersClick}
+                >
+                    Create Players
+                </Button>
             </FormGroup>
         </Col>
     </Row>;
