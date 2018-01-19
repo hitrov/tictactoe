@@ -6,12 +6,12 @@ import HistoryContainer from "./HistoryContainer";
 import PlayContainer from "./PlayContainer";
 import Header from '../components/Header';
 import NotFound from "../components/NotFound";
-import {dismissError, getGameId } from '../actions';
+import { dismissError } from '../actions';
 import {
     Route,
     Switch,
 } from 'react-router-dom';
-import { Navbar, Nav, NavItem, Alert, Grid } from 'react-bootstrap';
+import { Alert, Grid } from 'react-bootstrap';
 import '../components/App.css';
 
 class Main extends Component {
@@ -26,7 +26,7 @@ class Main extends Component {
     }
 
     render(){
-        const { error, dismissError, gameId } = this.props;
+        const { error, dismissError } = this.props;
 
         return (
             <Grid>
@@ -48,7 +48,6 @@ class Main extends Component {
 
 Main = withRouter(connect(state => ({
     error: state.errorMessage,
-    gameId: getGameId(state),
 }), {
     dismissError,
 })(Main));

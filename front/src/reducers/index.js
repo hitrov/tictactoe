@@ -12,10 +12,15 @@ const reducer = (state = {}, action) => {
                 isFetching: false,
             };
 
-        case 'SET_PLAYER_NAMES':
+        case 'SET_PLAYER_1_NAME':
             return {
                 ...state,
                 player1Name: action.player1Name,
+            };
+
+        case 'SET_PLAYER_2_NAME':
+            return {
+                ...state,
                 player2Name: action.player2Name,
             };
 

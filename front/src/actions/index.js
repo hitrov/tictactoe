@@ -37,9 +37,13 @@ export const postMove = action => (dispatch, getState) => {
     }, error => handleFetchError(error, dispatch, 'POST_MOVE_FAILURE'));
 };
 
-export const setPlayerNames = (player1Name, player2Name) => ({
-    type: 'SET_PLAYER_NAMES',
+export const setPlayer1Name = player1Name => ({
+    type: 'SET_PLAYER_1_NAME',
     player1Name,
+});
+
+export const setPlayer2Name = player2Name => ({
+    type: 'SET_PLAYER_2_NAME',
     player2Name,
 });
 

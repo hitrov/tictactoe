@@ -12,13 +12,12 @@ class PlayContainer extends Component {
     }
 
     onCreateGameClick() {
-        const { history, postGame } = this.props;
+        const { postGame } = this.props;
         postGame();
-        history.push('/play');
     }
 
     render(){
-        const { gameId, recents, player1Id, player2Id, onCreateGameClick } = this.props;
+        const { gameId, recents, player1Id, player2Id } = this.props;
 
         return (
             <Row style={{height: '100%'}} className="show-grid">
@@ -30,9 +29,9 @@ class PlayContainer extends Component {
                 {player1Id !== undefined && player2Id !== undefined &&
                 <Button
                     bsStyle="primary"
-                    onClick={onCreateGameClick}
+                    onClick={this.onCreateGameClick}
                 >
-                    Create Game
+                    New Game
                 </Button>}
 
                 <Col className={'hidden-xs'} lg={5}>
