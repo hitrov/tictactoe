@@ -17,7 +17,7 @@ class MY_Controller extends CI_Controller {
     const HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
 
     protected $headers = [
-        self::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN => 'https://ttt.hitrov.com',
+        self::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN => '*',
         self::HEADER_ACCESS_CONTROL_ALLOW_METHODS => [],
         self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type', 'Authorization'],
         //self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true',
