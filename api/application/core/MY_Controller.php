@@ -11,15 +11,16 @@ class MY_Controller extends CI_Controller {
 
     protected $http_code = 200;
 
+    const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
     const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
     const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
     const HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
 
     protected $headers = [
-        'Access-Control-Allow-Origin' => 'http://localhost:3000',
+        self::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN => '*',
         self::HEADER_ACCESS_CONTROL_ALLOW_METHODS => [],
         self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type', 'Authorization'],
-        self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true',
+        //self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true',
     ];
 
     protected $response;

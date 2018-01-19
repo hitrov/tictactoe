@@ -26,7 +26,7 @@ const callApi = (url, method, body, bearerToken = null) => {
         method: method,
         headers,
         body: body,
-        credentials: 'include',
+        // credentials: 'include',
     }).then(response => response.json()
         .then(json => {
             if (!response.ok) {
