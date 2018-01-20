@@ -52,6 +52,10 @@ body {
     font-size: 20px;
 }
 
+.player-names {
+    color: white;
+}
+
 .player-name {
     padding: 20px;
     text-align: center;

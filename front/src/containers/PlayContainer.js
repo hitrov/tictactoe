@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PlayingField from '../components/PlayingField';
+import PlayerNames from '../components/PlayerNames';
 import History from '../components/History';
 import { Row, Col, Button } from 'react-bootstrap';
 import { getGameId, postGame, getActivePlayerId } from '../actions';
@@ -30,14 +31,12 @@ class PlayContainer extends Component {
 
         return (
             <div>
-                <Row style={{color: 'white'}}>
-                    <Col className={player1ClassName} xs={6}>
-                        {player1Name}
-                    </Col>
-                    <Col className={player2ClassName} xs={6}>
-                        {player2Name}
-                    </Col>
-                </Row>
+                <PlayerNames
+                    player1Name={player1Name}
+                    player2Name={player2Name}
+                    player1ClassName={player1ClassName}
+                    player2ClassName={player2ClassName}
+                />
                 <Row style={{height: '100%'}} className="show-grid">
                     <Col xs={12} lg={7}>
                         {gameId !== null &&
