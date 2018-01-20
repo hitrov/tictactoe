@@ -26,7 +26,7 @@ class Main extends Component {
     }
 
     render(){
-        const { error, dismissError } = this.props;
+        const { error, dismissError, player1Id, player2Id } = this.props;
 
         return (
             <Grid>
@@ -34,7 +34,9 @@ class Main extends Component {
                 <Alert bsStyle="danger" onDismiss={dismissError}>
                     <h4>{error}</h4>
                 </Alert>}
-                <Header />
+                <Header
+                    displayGameHistoryLinks={player1Id && player2Id}
+                />
                 <Switch>
                     <Route exact path="/" component={CreateContainer} />
                     <Route path="/play" component={PlayContainer} />
@@ -46,9 +48,15 @@ class Main extends Component {
     }
 }
 
-Main = withRouter(connect(state => ({
-    error: state.errorMessage,
-}), {
+Main = withRouter(connect(state => {
+    const { error, player1Id, player2Id } = state;
+
+    return {
+        error,
+        player1Id,
+        player2Id,
+    };
+}, {
     dismissError,
 })(Main));
 

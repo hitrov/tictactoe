@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setPlayer1Name, setPlayer2Name, postCreatePlayers, postGame } from '../actions';
+import { setPlayer1Name, setPlayer2Name, postCreatePlayers, postGame, logout } from '../actions';
 import Create from '../components/Create';
 
 class CreateContainer extends Component {
@@ -43,6 +43,7 @@ class CreateContainer extends Component {
                 onCreatePlayersClick={onCreatePlayersClick}
                 player1Id={player1Id}
                 player2Id={player2Id}
+                onLogoutClick={logout}
             />
         );
     }

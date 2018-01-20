@@ -1,6 +1,8 @@
+import { LOCAL_STORAGE_STATE } from './constants';
+
 export const loadState = () => {
     try {
-        const serializedState = localStorage.getItem('state');
+        const serializedState = localStorage.getItem(LOCAL_STORAGE_STATE);
         if (serializedState === null) {
             return undefined;
         }
@@ -13,7 +15,7 @@ export const loadState = () => {
 export const saveState = state => {
     try {
         const serializedState = JSON.stringify(state);
-        localStorage.setItem('state', serializedState);
+        localStorage.setItem(LOCAL_STORAGE_STATE, serializedState);
     } catch (e) {
         console.log(e);
     }

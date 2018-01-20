@@ -5,6 +5,7 @@ import {
     API_GAME_URL,
     API_HISTORY_URL,
 } from '../constants';
+import { logout } from "../actions";
 
 const callApi = (url, method, body, bearerToken = null) => {
     url = API_BASE_URL+url;
@@ -30,7 +31,12 @@ const callApi = (url, method, body, bearerToken = null) => {
     }).then(response => response.json()
         .then(json => {
             if (!response.ok) {
-                return Promise.reject(json)
+                // handling token expired
+                if (response.status === 401) {
+                    setTimeout(logout, 1000)
+                }
+
+                return Promise.reject(json);
             }
             return json;
         }));

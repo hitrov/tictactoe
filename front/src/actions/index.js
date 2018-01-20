@@ -26,6 +26,7 @@ import {
     FETCH_HISTORY_FAILURE,
 
     DISMISS_ERROR,
+    LOCAL_STORAGE_STATE,
 } from '../constants';
 
 const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
@@ -198,3 +199,8 @@ export const dismissError = () => dispatch =>
     });
 
 export const getGameId = state => state.game ? state.game.game_id : null;
+
+export const logout = () => {
+    localStorage.setItem(LOCAL_STORAGE_STATE, '');
+    window.location.replace('/');
+};
