@@ -38,6 +38,7 @@ class CreateContainer extends Component {
             <Create
                 player1Name={player1Name}
                 player2Name={player2Name}
+                isCreatePlayersButtonDisabled={!player1Name || !player2Name}
                 onPlayer1NameChange={onPlayer1NameChange}
                 onPlayer2NameChange={onPlayer2NameChange}
                 onCreatePlayersClick={onCreatePlayersClick}

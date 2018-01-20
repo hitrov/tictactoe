@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use TicTacToe\Exceptions\HTTP\Bad_request;
+use TicTacToe\Exceptions\HTTP\Base_http_exception;
+
 class Player extends MY_Controller {
 
     protected $available_methods = ['POST'];
@@ -20,7 +23,12 @@ class Player extends MY_Controller {
         }
 
         $player_form = new Player_form();
-        if ($player_form->run()) {
+
+        try {
+            if (!$player_form->run()) {
+                throw new Bad_request($player_form->get_first_error());
+            }
+
             $player_1_id = $this->player_model->create($this->input->post('player_1'));
             $player_2_id = $this->player_model->create($this->input->post('player_2'));
 
@@ -33,8 +41,10 @@ class Player extends MY_Controller {
                 'player_1' => $player_1_id,
                 'player_2' => $player_2_id,
             ];
-        } else {
-            $this->errors = $player_form->error_array();
+
+        } catch(Base_http_exception $e) {
+            $this->http_code = $e->get_http_code();
+            $this->errors[] = $e->getMessage();
         }
 
         $this->send_response();

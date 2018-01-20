@@ -2,7 +2,7 @@ import React from 'react';
 import { FormGroup, FormControl, ControlLabel, Button, Row, Col } from 'react-bootstrap';
 
 const Create = ({player1Name, player2Name, onPlayer1NameChange, onPlayer2NameChange,
-                    onCreatePlayersClick, player1Id, player2Id, onLogoutClick }) =>
+                    onCreatePlayersClick, player1Id, player2Id, onLogoutClick, isCreatePlayersButtonDisabled }) =>
 
     <Row className="show-grid">
         <Col md={12}>
@@ -22,6 +22,7 @@ const Create = ({player1Name, player2Name, onPlayer1NameChange, onPlayer2NameCha
                 <Button
                     className="create-players-btn box-shadow"
                     onClick={onCreatePlayersClick}
+                    disabled={isCreatePlayersButtonDisabled}
                 >
                     Create Players
                 </Button>
