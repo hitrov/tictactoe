@@ -6,7 +6,7 @@
  * Time: 20:21
  */
 
-class Move_form extends CI_Form_validation {
+class Move_form extends MY_Form_validation {
 
     private $rules = [
         [
