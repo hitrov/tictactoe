@@ -15,8 +15,12 @@ class MY_Controller extends CI_Controller {
     const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
     const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
     const HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS = 'Access-Control-Allow-Credentials';
+    const HEADER_ACCESS_CONTROL_MAX_AGE = 'Access-Control-Max-Age';
+
+    const ACCESS_CONTROL_MAX_AGE = 300; // seconds
 
     protected $headers = [
+        self::HEADER_ACCESS_CONTROL_MAX_AGE => self::ACCESS_CONTROL_MAX_AGE,
         self::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN => '*',
         self::HEADER_ACCESS_CONTROL_ALLOW_METHODS => [],
         self::HEADER_ACCESS_CONTROL_ALLOW_HEADERS => ['Content-Type', 'Authorization'],
