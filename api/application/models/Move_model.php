@@ -74,11 +74,18 @@ class Move_model extends MY_Model {
         }
     }
 
+    private function get_moves_count(int $game_id): int {
+        return $this->db
+            ->where('game_id', $game_id)
+            ->count_all_results($this->table_name);
+    }
+
     /**
      * @param int $game_id
      * @param int $player_id
      * @param int $move_id
      *
+     * @throws Draw
      * @throws Internal_server_error
      * @throws Player_win
      */
@@ -124,6 +131,11 @@ class Move_model extends MY_Model {
                 throw new Internal_server_error('Move won but unknown server error occurred');
             }
             throw new Player_win($move_id);
+        }
+
+
+        if ($this->get_moves_count($game_id) === 9) {
+            throw new Draw($move_id);
         }
     }
 
@@ -185,10 +197,6 @@ class Move_model extends MY_Model {
 
         $this->check_win($game_id, $player_id, $move_id);
 
-        if (count($moves) + 1 == 9) {
-            throw new Draw($move_id);
-        }
-
         return $move_id;
     }
 
@@ -198,6 +206,7 @@ class Move_model extends MY_Model {
      *
      * @return array
      * @throws Action_already_exists
+     * @throws Draw
      * @throws Game_already_finished
      * @throws Game_not_found
      * @throws Internal_server_error
@@ -240,8 +249,10 @@ class Move_model extends MY_Model {
         $this->check_win($game_id, $bot_id, $bot_move_id);
 
         return [
-            $this->get($player_move_id),
-            $this->get($bot_move_id),
+            'moves' => [
+                $this->get($player_move_id),
+                $this->get($bot_move_id),
+            ],
         ];
     }
 

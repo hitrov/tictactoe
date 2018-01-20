@@ -1,8 +1,19 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, Button, Row, Col } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, Row, Col, Checkbox } from 'react-bootstrap';
 
-const Create = ({player1Name, player2Name, onPlayer1NameChange, onPlayer2NameChange,
-                    onCreatePlayersClick, player1Id, player2Id, onLogoutClick, isCreatePlayersButtonDisabled }) =>
+const Create = ({
+    player1Name,
+    player2Name,
+    onPlayer1NameChange,
+    onPlayer2NameChange,
+    onCreatePlayersClick,
+    player1Id,
+    player2Id,
+    onLogoutClick,
+    isCreatePlayersButtonDisabled,
+    onPlayWithBotChange,
+    playWithBot,
+}) =>
 
     <Row className="show-grid">
         <Col md={12}>
@@ -14,7 +25,13 @@ const Create = ({player1Name, player2Name, onPlayer1NameChange, onPlayer2NameCha
                     value={player1Name}
                 />
                 <ControlLabel className="create-player-form__label">Player 2:</ControlLabel>
+
+                <ControlLabel className="create-player-form__label">
+                    <Checkbox checked={playWithBot} onChange={onPlayWithBotChange}>Play With Bot</Checkbox>
+                </ControlLabel>
+
                 <FormControl
+                    disabled={playWithBot}
                     className="create-player-form__input box-shadow"
                     onChange={onPlayer2NameChange}
                     value={player2Name}

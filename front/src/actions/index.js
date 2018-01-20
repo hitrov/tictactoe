@@ -27,6 +27,8 @@ import {
 
     DISMISS_ERROR,
     LOCAL_STORAGE_STATE,
+
+    TOGGLE_PLAY_WITH_BOT,
 } from '../constants';
 
 const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
@@ -40,13 +42,13 @@ const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
 export const postMove = action => (dispatch, getState) => {
 
     const state = getState();
-    const { bearerToken } = state;
+    const { bearerToken, playWithBot } = state;
 
     dispatch({
         type: POST_MOVE_REQUEST,
     });
 
-    api.move(action, bearerToken).then(response => {
+    api.move(action, bearerToken, playWithBot).then(response => {
 
         const { player_id_won, draw, won_combination, dt, bearer_token } = response;
 
@@ -56,7 +58,7 @@ export const postMove = action => (dispatch, getState) => {
 
         dispatch({
             type: POST_MOVE_SUCCESS,
-            move: response,
+            move: response.moves ? response.moves : response,
         });
 
         if (player_id_won || draw) {
@@ -213,3 +215,8 @@ export const getActivePlayerId = state => {
 
     return state.player2Id;
 };
+
+export const togglePlayWithBot = () => dispatch =>
+    dispatch({
+        type: TOGGLE_PLAY_WITH_BOT,
+    });

@@ -42,8 +42,8 @@ const callApi = (url, method, body, bearerToken = null) => {
         }));
 };
 
-export const move = (action, bearerToken) =>
-    callApi(API_MOVE_URL, "POST", {
+export const move = (action, bearerToken, playWithBot) =>
+    callApi(playWithBot ? API_MOVE_URL+'/?with_bot=1' : API_MOVE_URL, "POST", {
         action,
     }, bearerToken);
 

@@ -26,16 +26,21 @@ import {
     FETCH_HISTORY_FAILURE,
 
     DISMISS_ERROR,
+
+    TOGGLE_PLAY_WITH_BOT,
 } from '../constants';
 
 const reducer = (state = {}, action) => {
     switch (action.type) {
         case POST_MOVE_SUCCESS:
+
+            const moves = Array.isArray(action.move) ? [...action.move] : [action.move];
+
             return {
                 ...state,
                 game: {
                     ...state.game,
-                    moves: [...state.game.moves, action.move],
+                    moves: [...state.game.moves, ...moves],
                 },
                 isFetching: false,
             };
@@ -147,6 +152,12 @@ const reducer = (state = {}, action) => {
             return {
                 ...state,
                 errorMessage: '',
+            };
+
+        case TOGGLE_PLAY_WITH_BOT:
+            return {
+                ...state,
+                playWithBot: !state.playWithBot,
             };
 
         default:
