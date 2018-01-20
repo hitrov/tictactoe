@@ -2,7 +2,6 @@ body {
     background-color: #121212;
 }
 
-
 .header {
     display: flex;
     background-color: #212121;
@@ -24,7 +23,11 @@ body {
 .header__link:hover, .header__link:focus, .header__link.active {
     font-size: 28px;
     color: #ffffff;
-    text-decoration: none;
+    text-decoration: underline;
+}
+
+.header__link:hover {
+    color: #b3b3b3;
 }
 
 .create-players-form {
@@ -43,7 +46,6 @@ body {
     color: #212121;
     font-size: 18px;
 }
-
 
 .create-player-form__checkbox {
     display: inline-block;
@@ -88,7 +90,6 @@ body {
     font-size: 20px;
     border: none;
 }
-
 
 .player-names {
     display: flex;
