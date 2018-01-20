@@ -10,7 +10,7 @@ const style = {
 };
 
 const Move = props => {
-    const { symbol, onMoveClick, gameFinished, isWonMove, isMoveDone, isDraw } = props;
+    const { symbol, onMoveClick, gameFinished, isWonMove, isMoveDone, isDraw, isFetching } = props;
 
     let backgroundColor = 'white';
     if (isDraw) {
@@ -21,7 +21,7 @@ const Move = props => {
     }
 
     let cursor = 'pointer';
-    if (gameFinished || isMoveDone || isDraw) {
+    if (gameFinished || isMoveDone || isDraw || isFetching) {
         cursor = 'not-allowed';
     }
 
