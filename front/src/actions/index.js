@@ -220,3 +220,5 @@ export const togglePlayWithBot = () => dispatch =>
     dispatch({
         type: TOGGLE_PLAY_WITH_BOT,
     });
+
+export const getGameFinished = state => state.game && (state.game.player_id_won || state.game.finished);
