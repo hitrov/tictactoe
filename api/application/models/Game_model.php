@@ -74,8 +74,9 @@ class Game_model extends MY_Model {
 
         $ordered_history = [];
         foreach ($history as $game_id => $game) {
-            if (!empty($game['moves']) && count($game['moves']) === 9) {
-                $history[$game_id]['finished'] = end($history[$game_id]['moves'])['dt'];
+            if (!empty($game['moves']) && !empty(!empty($row['player_id_won']))) {
+                $last_move = reset($history[$game_id]['moves']);
+                $history[$game_id]['finished'] = $last_move['dt'];
             }
             $ordered_history[] = $history[$game_id];
         }
