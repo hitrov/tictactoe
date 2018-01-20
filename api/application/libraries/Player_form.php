@@ -8,6 +8,10 @@
 
 class Player_form extends MY_Form_validation {
 
+    public function __construct() {
+        parent::__construct($this->rules);
+    }
+
     private $rules = [
         [
             'field' => 'player_1',
@@ -20,8 +24,4 @@ class Player_form extends MY_Form_validation {
             'rules' => 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[64]',
         ]
     ];
-
-    public function __construct() {
-        parent::__construct($this->rules);
-    }
 }

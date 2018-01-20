@@ -8,6 +8,10 @@
 
 class Move_form extends MY_Form_validation {
 
+    public function __construct() {
+        parent::__construct($this->rules);
+    }
+
     private $rules = [
         [
             'field' => 'action',
@@ -15,8 +19,4 @@ class Move_form extends MY_Form_validation {
             'rules' => 'required|in_list[1,2,3,4,5,6,7,8,9]',
         ],
     ];
-
-    public function __construct() {
-        parent::__construct($this->rules);
-    }
 }
