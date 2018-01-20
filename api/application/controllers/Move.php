@@ -43,7 +43,7 @@ class Move extends MY_Controller {
             } catch(Game_already_finished $e) {
                 $this->response = [
                     'finished' => true,
-                    'player_id' => $e->getMessage(),
+                    'player_id_won' => $e->getMessage(),
                 ];
 
             } catch(Base_http_exception $e) {

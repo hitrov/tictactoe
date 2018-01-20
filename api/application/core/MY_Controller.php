@@ -86,6 +86,11 @@ class MY_Controller extends CI_Controller {
 
         $this->handle_cors();
 
+        if ($this->input->method(true) == 'OPTIONS') {
+            $this->processed = true;
+            return;
+        }
+
         $this->output->set_content_type('application/json');
 
         $response = $this->response;

@@ -12,7 +12,7 @@ class MoveContainer extends Component {
                 action={action}
                 symbol={symbol}
                 gameFinished={gameFinished}
-                onMoveClick={() => !gameFinished && postMove(action)}
+                onMoveClick={() => !isFetching && !isMoveDone && !gameFinished && !isDraw && postMove(action)}
                 isWonMove={isWonMove}
                 isMoveDone={isMoveDone}
                 isDraw={isDraw}
