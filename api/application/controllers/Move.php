@@ -41,9 +41,14 @@ class Move extends MY_Controller {
             $token_payload = $this->jwtoken->getRequestPayload();
             $game_id = $token_payload['game_id'];
 
-            $move_id = $this->move_model->create($game_id, $action);
+            if (true) {
+                $move_id = $this->move_model->create_without_respond($game_id, $action);
+                $response = $this->move_model->get($move_id);
+            } else {
+                $response = $this->move_model->create_and_respond($game_id, $action);
+            }
 
-            $this->response = $this->move_model->get($move_id);
+            $this->response = $response;
 
         } catch(Game_already_finished $e) {
             $this->response = [

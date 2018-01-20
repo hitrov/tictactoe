@@ -59,7 +59,7 @@ class Move_model extends MY_Model {
      * @throws Action_already_exists
      * @throws Moves_are_off
      */
-    private function validate(array $moves, int $action) {
+    private function validate_moves(array $moves, int $action) {
         if (empty($moves)) {
             return;
         }
@@ -128,6 +128,29 @@ class Move_model extends MY_Model {
     }
 
     /**
+     * @param array|null $game
+     * @param array $moves
+     * @param int $action
+     *
+     * @throws Action_already_exists
+     * @throws Game_already_finished
+     * @throws Game_not_found
+     * @throws Moves_are_off
+     */
+    private function validate(array $game = null, array $moves, int $action) {
+        if (empty($game)) {
+            throw new Game_not_found();
+        }
+
+        $winner_id = $this->game_model->get_winner_id($game['id']);
+        if ($winner_id) {
+            throw new Game_already_finished($winner_id);
+        }
+
+        $this->validate_moves($moves, $action);
+    }
+
+    /**
      * @param int $game_id
      * @param int $action
      *
@@ -140,25 +163,15 @@ class Move_model extends MY_Model {
      * @throws Moves_are_off
      * @throws Player_win
      */
-    public function create(int $game_id, int $action): int {
+    public function create_without_respond(int $game_id, int $action): int {
         $game = $this->game_model->get($game_id);
-
-        if (empty($game)) {
-            throw new Game_not_found();
-        }
-
-        $winner_id = $this->game_model->get_winner_id($game_id);
-        if ($winner_id) {
-            throw new Game_already_finished($winner_id);
-        }
-
         $moves = $this->db
             ->get_where($this->table_name, [
                 'game_id' => $game_id,
             ])
             ->result_array();
 
-        $this->validate($moves, $action);
+        $this->validate($game, $moves, $action);
 
         $player_id = $this->get_current_player_id($moves, $game);
 
@@ -177,5 +190,28 @@ class Move_model extends MY_Model {
         }
 
         return $move_id;
+    }
+
+    /**
+     * @param int $game_id
+     * @param int $action
+     *
+     * @return array
+     * @throws Action_already_exists
+     * @throws Game_already_finished
+     * @throws Game_not_found
+     * @throws Moves_are_off
+     */
+    public function create_and_respond(int $game_id, int $action): array {
+        $game = $this->game_model->get($game_id);
+        $moves = $this->db
+            ->get_where($this->table_name, [
+                'game_id' => $game_id,
+            ])
+            ->result_array();
+
+        $this->validate($game, $moves, $action);
+
+        return [];
     }
 }
