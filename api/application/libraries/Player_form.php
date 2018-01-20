@@ -12,12 +12,12 @@ class Player_form extends MY_Form_validation {
         [
             'field' => 'player_1',
             'label' => '',
-            'rules' => 'required|alpha_numeric|max_length[64]',
+            'rules' => 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[64]',
         ],
         [
             'field' => 'player_2',
             'label' => '',
-            'rules' => 'required|alpha_numeric|max_length[64]',
+            'rules' => 'required|regex_match[/^[a-zA-Z0-9 ]+$/]|max_length[64]',
         ]
     ];
 
