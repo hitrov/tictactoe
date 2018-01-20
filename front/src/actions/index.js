@@ -23,16 +23,17 @@ export const postMove = action => (dispatch, getState) => {
 
         dispatch(setBearerToken(bearer_token));
 
-        if (player_id_won || draw) {
-            dispatch(addRecentGame(player_id_won, won_combination, dt, draw));
-        }
-
         delete response.bearer_token;
 
         dispatch({
             type: 'POST_MOVE_SUCCESS',
             move: response,
         });
+
+        if (player_id_won || draw) {
+            dispatch(addRecentGame(player_id_won, won_combination, dt, draw));
+        }
+
 
     }, error => handleFetchError(error, dispatch, 'POST_MOVE_FAILURE'));
 };
