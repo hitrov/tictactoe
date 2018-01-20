@@ -10,7 +10,20 @@ const style = {
 };
 
 const Move = props => {
-    const { symbol, onMoveClick, gameFinished, isWonMove, isMoveDone } = props;
+    const { symbol, onMoveClick, gameFinished, isWonMove, isMoveDone, isDraw } = props;
+
+    let backgroundColor = 'white';
+    if (isDraw) {
+        backgroundColor = 'grey';
+    }
+    if (isWonMove) {
+        backgroundColor = 'green';
+    }
+
+    let cursor = 'pointer';
+    if (gameFinished || isMoveDone || isDraw) {
+        cursor = 'not-allowed';
+    }
 
     return (
         <Col
@@ -20,8 +33,8 @@ const Move = props => {
             lg={4}
             style={{
             ...style,
-            cursor: gameFinished || isMoveDone ? 'not-allowed' : 'pointer',
-            backgroundColor: isWonMove ? 'green' : 'white'
+            cursor,
+            backgroundColor,
         }} className={isWonMove ? 'won' : ''} onClick={onMoveClick}>
             {symbol}
         </Col>
