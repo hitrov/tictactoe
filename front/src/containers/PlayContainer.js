@@ -33,7 +33,7 @@ class PlayContainer extends Component {
         let player1ClassName = 'player-name',
             player2ClassName = 'player-name';
 
-        if (!gameFinished) {
+        if (gameId && !gameFinished) {
             if (activePlayerId === player1Id) {
                 player1ClassName += ' active';
             } else {
@@ -51,7 +51,7 @@ class PlayContainer extends Component {
                 />
                 <React.Fragment>
                     <Col xs={12} lg={7}>
-                        {gameId !== null &&
+                        {gameId &&
                         <PlayingField />}
                     </Col>
 
