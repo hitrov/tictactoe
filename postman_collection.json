@@ -1,0 +1,211 @@
+{
+	"info": {
+		"name": "TicTacToe",
+		"_postman_id": "d6a38cee-5836-7971-6831-631ccfbe816e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "history",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "XDEBUG_SESSION=PHPSTORM;"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "player_1",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "player_2",
+							"value": "2",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{tic_tac_toe_api_url}}/game/history",
+					"host": [
+						"{{tic_tac_toe_api_url}}"
+					],
+					"path": [
+						"game",
+						"history"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "players",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "player_1",
+							"value": "JohnDoe",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "player_2",
+							"value": "MrSmith",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{tic_tac_toe_api_url}}/player/create_players",
+					"host": [
+						"{{tic_tac_toe_api_url}}"
+					],
+					"path": [
+						"player",
+						"create_players"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "game",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "XDEBUG_SESSION=PHPSTORM;"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{tic_tac_toe_api_url}}/game",
+					"host": [
+						"{{tic_tac_toe_api_url}}"
+					],
+					"path": [
+						"game"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "move",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "XDEBUG_SESSION=PHPSTORM;"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "action",
+							"value": "4",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{tic_tac_toe_api_url}}/move",
+					"host": [
+						"{{tic_tac_toe_api_url}}"
+					],
+					"path": [
+						"move"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
