@@ -58,6 +58,9 @@ const reducer = (state = {}, action) => {
                 player1Id: action.player1Id,
                 player2Id: action.player2Id,
                 isFetching: false,
+                game: null,
+                history: [],
+                recents: [],
             };
 
         case SET_X_O:

@@ -51,3 +51,14 @@ body {
     padding: 10px 40px;
     font-size: 20px;
 }
+
+.player-name {
+    padding: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.player-name.active {
+    padding: 20px;
+    color: #00cc00;
+}

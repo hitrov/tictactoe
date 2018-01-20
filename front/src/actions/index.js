@@ -204,3 +204,12 @@ export const logout = () => {
     localStorage.setItem(LOCAL_STORAGE_STATE, '');
     window.location.replace('/');
 };
+
+export const getActivePlayerId = state => {
+    const { game } = state;
+    if (!game || !game.moves || game.moves.length === 0 || game.moves.length % 2 === 0) {
+        return state.player1Id;
+    }
+
+    return state.player2Id;
+};
