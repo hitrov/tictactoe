@@ -48,6 +48,7 @@ class Move extends MY_Controller {
                 $response = $this->move_model->create_and_respond($game_id, $action);
             }
 
+            //$response = $this->move_model->create_and_respond($game_id, $action);
             $this->response = $response;
 
         } catch(Game_already_finished $e) {

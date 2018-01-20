@@ -64,7 +64,7 @@ class Move_model extends MY_Model {
             return;
         }
 
-        if (count($moves) == 9) {
+        if (count($moves) >= 9) {
             throw new Moves_are_off();
         }
 
@@ -200,7 +200,9 @@ class Move_model extends MY_Model {
      * @throws Action_already_exists
      * @throws Game_already_finished
      * @throws Game_not_found
+     * @throws Internal_server_error
      * @throws Moves_are_off
+     * @throws Player_win
      */
     public function create_and_respond(int $game_id, int $action): array {
         $game = $this->game_model->get($game_id);
@@ -212,6 +214,121 @@ class Move_model extends MY_Model {
 
         $this->validate($game, $moves, $action);
 
-        return [];
+        $player_id = $game['player_1'];
+        $bot_id = $game['player_2'];
+
+        $this->db->insert($this->table_name, [
+            'game_id' => $game_id,
+            'player_id' => $player_id,
+            'action' => $action,
+        ]);
+
+        $player_move_id = $this->db->insert_id();
+
+        $this->check_win($game_id, $player_id, $player_move_id);
+
+        $next_action = $this->get_next_action($game_id, $player_id, $bot_id);
+
+        $this->db->insert($this->table_name, [
+            'game_id' => $game_id,
+            'player_id' => $bot_id,
+            'action' => $next_action,
+        ]);
+
+        $bot_move_id = $this->db->insert_id();
+
+        $this->check_win($game_id, $bot_id, $bot_move_id);
+
+        return [
+            $this->get($player_move_id),
+            $this->get($bot_move_id),
+        ];
+    }
+
+    private function get_next_action(int $game_id, int $player_id, int $bot_id): int {
+        $player_moves = $this->db
+            ->get_where($this->table_name, [
+                'game_id' => $game_id,
+                'player_id' => $player_id,
+            ])
+            ->result_array();
+
+        if (!empty($player_moves)) {
+            $player_actions = array_column($player_moves, 'action');
+        }
+
+        $bot_moves = $this->db
+            ->get_where($this->table_name, [
+                'game_id' => $game_id,
+                'player_id' => $bot_id,
+            ])
+            ->result_array();
+
+        if (!empty($bot_moves)) {
+            $bot_actions = array_column($bot_moves, 'action');
+        }
+
+        $action = $this->get_action($player_actions ?? [], $bot_actions ?? []);
+
+        return $action;
+    }
+
+    private function get_last_action_for_win(array $actions, array $done_actions): int {
+        $action_for_win = 0;
+        foreach (self::WIN_COMBINATIONS as $key => $combination) {
+            //could be 2 possible combinations for win at the moment
+            if ($action_for_win) {
+                break;
+            }
+
+            $in_win_combination = [];
+            foreach ($actions as $action) {
+                if (!in_array($action, $combination)) {
+                    continue;
+                }
+                $in_win_combination[] = $action;
+                if (count($in_win_combination) === 2) {
+                    $diff = array_diff($combination, $in_win_combination);
+                    $possible_action_for_win = reset($diff);
+                    if (!in_array($possible_action_for_win, $done_actions)) {
+                        $action_for_win = $possible_action_for_win;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $action_for_win;
+    }
+
+    private function get_action(array $player_actions, array $bot_actions): int {
+        $all_actions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        $done_actions = array_merge($player_actions, $bot_actions);
+
+        // check maybe bot could win in this move
+        $respond_action = $this->get_last_action_for_win($bot_actions, $done_actions);
+        if ($respond_action) {
+
+            return $respond_action;
+        }
+
+        // check maybe player is about to win now
+        $respond_action = $this->get_last_action_for_win($player_actions, $done_actions);
+        if ($respond_action) {
+
+            return $respond_action;
+        }
+
+        // important move if position is free!
+        if (!in_array(5, $done_actions)) {
+            return 5;
+        }
+
+        // random free position
+        $possible_actions = array_diff($all_actions, $done_actions);
+        $random_key = array_rand($possible_actions);
+        $respond_action = $possible_actions[$random_key];
+
+        return $respond_action;
     }
 }
