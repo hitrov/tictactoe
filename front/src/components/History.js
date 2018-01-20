@@ -10,7 +10,7 @@ const History = props => {
     }
 
     return (
-        <Table responsive striped bordered condensed hover>
+        <Table className="history-table" responsive bordered condensed hover>
             <thead>
                 <tr>
                     <th>Game ID</th>

@@ -17,7 +17,7 @@ const Move = props => {
         backgroundColor = 'grey';
     }
     if (isWonMove) {
-        backgroundColor = 'green';
+        backgroundColor = '#1db954';
     }
 
     let cursor = 'pointer';

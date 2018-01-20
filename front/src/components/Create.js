@@ -20,36 +20,46 @@ const Create = ({
             <FormGroup className="create-players-form">
                 <ControlLabel className="create-player-form__label">Player 1:</ControlLabel>
                 <FormControl
-                    className="create-player-form__input box-shadow"
+                    className="create-player-form__input"
                     onChange={onPlayer1NameChange}
                     value={player1Name}
                 />
                 <ControlLabel className="create-player-form__label">Player 2:</ControlLabel>
 
-                <ControlLabel className="create-player-form__label">
-                    <Checkbox checked={playWithBot} onChange={onPlayWithBotChange}>Play With Bot</Checkbox>
-                </ControlLabel>
-
                 <FormControl
                     disabled={playWithBot}
-                    className="create-player-form__input box-shadow"
+                    className="create-player-form__input"
                     onChange={onPlayer2NameChange}
                     value={player2Name}
                 />
-                <Button
-                    className="create-players-btn box-shadow"
-                    onClick={onCreatePlayersClick}
-                    disabled={isCreatePlayersButtonDisabled}
-                >
-                    Create Players
-                </Button>
 
-                {player1Id && player2Id &&
-                <Button
-                    onClick={onLogoutClick}
+                <Checkbox
+                    className="create-player-form__checkbox"
+                    checked={playWithBot}
+                    onChange={onPlayWithBotChange}
                 >
-                    Logout
-                </Button>}
+                    Play With Bot
+                </Checkbox>
+
+                <div className="create-player-form__actions">
+
+                    <Button
+                        className="create-players-btn"
+                        onClick={onCreatePlayersClick}
+                        disabled={isCreatePlayersButtonDisabled}
+                    >
+                        Create Players
+                    </Button>
+
+                    {player1Id && player2Id &&
+                    <Button
+                        className="create-players-btn__logout"
+                        onClick={onLogoutClick}
+                    >
+                        Logout
+                    </Button>}
+
+                </div>
             </FormGroup>
         </Col>
     </Row>;

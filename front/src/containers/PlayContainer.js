@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PlayingField from '../components/PlayingField';
 import PlayerNames from '../components/PlayerNames';
 import History from '../components/History';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Col, Button, Clearfix } from 'react-bootstrap';
 import { getGameId, postGame, getActivePlayerId, getGameFinished } from '../actions';
 
 class PlayContainer extends Component {
@@ -41,32 +41,34 @@ class PlayContainer extends Component {
         }
 
         return (
-            <div>
+            <React.Fragment>
                 <PlayerNames
                     player1Name={player1Name}
                     player2Name={player2Name}
                     player1ClassName={player1ClassName}
                     player2ClassName={player2ClassName}
                 />
-                <Row style={{height: '100%'}} className="show-grid">
+                <React.Fragment>
                     <Col xs={12} lg={7}>
                         {gameId !== null &&
                         <PlayingField />}
                     </Col>
 
-                    {player1Id !== undefined && player2Id !== undefined &&
-                    <Button
-                        bsStyle="primary"
-                        onClick={this.onCreateGameClick}
-                    >
-                        New Game
-                    </Button>}
+                    <Col xs={12} lg={5}>
+                        {(player1Id && player2Id) &&
+                        <Button
+                            className="game__new-game-btn"
+                            onClick={this.onCreateGameClick}
+                        >
+                            New Game
+                        </Button>}
 
-                    <Col className={'hidden-xs'} lg={5}>
-                        <History history={recents} />
+                        <Col className={'game__recent-table hidden-xs'} >
+                            <History history={recents} />
+                        </Col>
                     </Col>
-                </Row>
-            </div>
+                </React.Fragment>
+            </React.Fragment>
         );
     }
 }

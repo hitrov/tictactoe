@@ -26,7 +26,7 @@ class Main extends Component {
     }
 
     render(){
-        const { errorMessage, dismissError, player1Id, player2Id } = this.props;
+        const { errorMessage, dismissError, player1Id, player2Id, history } = this.props;
 
         return (
             <Grid>
@@ -35,6 +35,7 @@ class Main extends Component {
                     <h4>{errorMessage}</h4>
                 </Alert>}
                 <Header
+                    pathName={history.location.pathname}
                     displayGameHistoryLinks={player1Id && player2Id}
                 />
                 <Switch>
