@@ -13,18 +13,9 @@ import {
 } from 'react-router-dom';
 import { Alert, Grid } from 'react-bootstrap';
 import '../components/App.css';
+import { PATH_HOME, PATH_GAME, PATH_HISTORY } from '../constants';
 
 class Main extends Component {
-    constructor(props) {
-        super(props);
-        this.onSelectTab = this.onSelectTab.bind(this);
-    }
-
-    onSelectTab(href) {
-        const { history } = this.props;
-        history.push(href);
-    }
-
     render(){
         const { errorMessage, dismissError, player1Id, player2Id, history } = this.props;
 
@@ -39,9 +30,9 @@ class Main extends Component {
                     displayGameHistoryLinks={player1Id && player2Id}
                 />
                 <Switch>
-                    <Route exact path="/" component={CreateContainer} />
-                    <Route path="/play" component={PlayContainer} />
-                    <Route path="/history" component={HistoryContainer} />
+                    <Route exact path={PATH_HOME} component={CreateContainer} />
+                    <Route path={PATH_GAME} component={PlayContainer} />
+                    <Route path={PATH_HISTORY} component={HistoryContainer} />
                     <Route component={NotFound} />
                 </Switch>
             </Grid>

@@ -9,6 +9,7 @@ import {
     togglePlayWithBot
 } from '../actions';
 import Create from '../components/Create';
+import { PATH_GAME } from '../constants';
 
 class CreateContainer extends Component {
     constructor(props) {
@@ -32,10 +33,8 @@ class CreateContainer extends Component {
 
     onCreatePlayersClick() {
         const { postCreatePlayers, history, player1Name, player2Name } = this.props;
-
         postCreatePlayers(player1Name, player2Name);
-
-        history.push('/play');
+        history.push(PATH_GAME);
     }
 
     onPlayWithBotChange() {

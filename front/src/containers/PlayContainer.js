@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PlayingField from '../components/PlayingField';
 import PlayerNames from '../components/PlayerNames';
 import History from '../components/History';
-import { Col, Button, Clearfix } from 'react-bootstrap';
+import { Col, Button } from 'react-bootstrap';
 import { getGameId, postGame, getActivePlayerId, getGameFinished } from '../actions';
 
 class PlayContainer extends Component {
@@ -26,7 +26,8 @@ class PlayContainer extends Component {
             player1Name,
             player2Name,
             activePlayerId,
-            gameFinished
+            gameFinished,
+            isNewGameButtonDisabled,
         } = this.props;
 
         let player1ClassName = 'player-name',
@@ -59,6 +60,7 @@ class PlayContainer extends Component {
                         <Button
                             className="game__new-game-btn"
                             onClick={this.onCreateGameClick}
+                            disabled={isNewGameButtonDisabled}
                         >
                             New Game
                         </Button>}
@@ -87,6 +89,7 @@ PlayContainer = connect(state => {
         player2Name,
         activePlayerId: getActivePlayerId(state),
         gameFinished,
+        isNewGameButtonDisabled: state.game && state.game.moves && state.game.moves.length === 0,
     };
 }, {
     postGame,

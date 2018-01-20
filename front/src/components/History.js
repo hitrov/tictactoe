@@ -6,7 +6,7 @@ const History = props => {
     const { history, isFetching } = props;
 
     if (isFetching) {
-        return <ProgressBar active now={100} />;
+        return <ProgressBar bsStyle="success" active now={100} />;
     }
 
     return (

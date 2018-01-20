@@ -17,6 +17,10 @@ body {
     color: #1db954;
 }
 
+.header__link, .create-players-btn, .create-players-btn__logout, .game__new-game-btn {
+    text-transform: uppercase;
+}
+
 .header__link:hover, .header__link:focus, .header__link.active {
     font-size: 28px;
     color: #ffffff;

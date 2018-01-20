@@ -36,3 +36,7 @@ export const FETCH_HISTORY_FAILURE = 'FETCH_HISTORY_FAILURE';
 export const DISMISS_ERROR = 'DISMISS_ERROR';
 
 export const TOGGLE_PLAY_WITH_BOT = 'TOGGLE_PLAY_WITH_BOT';
+
+export const PATH_HOME = '/';
+export const PATH_GAME = '/play';
+export const PATH_HISTORY = '/history';
