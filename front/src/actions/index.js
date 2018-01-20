@@ -1,7 +1,35 @@
 import * as api from '../api';
+import {
+    ADD_RECENT_GAME,
+
+    POST_MOVE_REQUEST,
+    POST_MOVE_SUCCESS,
+    POST_MOVE_FAILURE,
+
+    SET_PLAYER_1_NAME,
+    SET_PLAYER_2_NAME,
+
+    SET_X_O,
+
+    SET_BEARER_TOKEN,
+
+    POST_CREATE_PLAYERS_REQUEST,
+    POST_CREATE_PLAYERS_SUCCESS,
+    POST_CREATE_PLAYERS_FAILURE,
+
+    POST_CREATE_GAME_REQUEST,
+    POST_CREATE_GAME_SUCCESS,
+    POST_CREATE_GAME_FAILURE,
+
+    FETCH_HISTORY_REQUEST,
+    FETCH_HISTORY_SUCCESS,
+    FETCH_HISTORY_FAILURE,
+
+    DISMISS_ERROR,
+} from '../constants';
 
 const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
-    type: 'ADD_RECENT_GAME',
+    type: ADD_RECENT_GAME,
     playerIdWon,
     wonCombination,
     dt,
@@ -14,7 +42,7 @@ export const postMove = action => (dispatch, getState) => {
     const { bearerToken } = state;
 
     dispatch({
-        type: 'POST_MOVE_REQUEST',
+        type: POST_MOVE_REQUEST,
     });
 
     api.move(action, bearerToken).then(response => {
@@ -26,7 +54,7 @@ export const postMove = action => (dispatch, getState) => {
         delete response.bearer_token;
 
         dispatch({
-            type: 'POST_MOVE_SUCCESS',
+            type: POST_MOVE_SUCCESS,
             move: response,
         });
 
@@ -35,40 +63,40 @@ export const postMove = action => (dispatch, getState) => {
         }
 
 
-    }, error => handleFetchError(error, dispatch, 'POST_MOVE_FAILURE'));
+    }, error => handleFetchError(error, dispatch, POST_MOVE_FAILURE));
 };
 
 export const setPlayer1Name = player1Name => ({
-    type: 'SET_PLAYER_1_NAME',
+    type: SET_PLAYER_1_NAME,
     player1Name,
 });
 
 export const setPlayer2Name = player2Name => ({
-    type: 'SET_PLAYER_2_NAME',
+    type: SET_PLAYER_2_NAME,
     player2Name,
 });
 
 const setXO = (xId, oId) => ({
-    type: 'SET_X_O',
+    type: SET_X_O,
     xId,
     oId,
 });
 
 const setBearerToken = bearerToken => ({
-    type: 'SET_BEARER_TOKEN',
+    type: SET_BEARER_TOKEN,
     bearerToken,
 });
 
 export const postCreatePlayers = (player1Name, player2Name) => dispatch => {
     dispatch({
-        type: 'POST_CREATE_PLAYERS_REQUEST',
+        type: POST_CREATE_PLAYERS_REQUEST,
     });
 
     api.createPlayers(player1Name, player2Name).then(response => {
         const { player_1, player_2, bearer_token } = response;
 
         dispatch({
-            type: 'POST_CREATE_PLAYERS_SUCCESS',
+            type: POST_CREATE_PLAYERS_SUCCESS,
             player1Id: player_1,
             player2Id: player_2,
         });
@@ -76,7 +104,7 @@ export const postCreatePlayers = (player1Name, player2Name) => dispatch => {
         dispatch(setXO(player_1, player_2));
         dispatch(setBearerToken(bearer_token));
 
-    }, error => handleFetchError(error, dispatch, 'POST_CREATE_PLAYERS_FAILURE'));
+    }, error => handleFetchError(error, dispatch, POST_CREATE_PLAYERS_FAILURE));
 };
 
 export const postGame = () => (dispatch, getState) => {
@@ -84,7 +112,7 @@ export const postGame = () => (dispatch, getState) => {
     const { bearerToken } = state;
 
     dispatch({
-        type: 'POST_CREATE_GAME_REQUEST',
+        type: POST_CREATE_GAME_REQUEST,
     });
 
     api.createGame(bearerToken).then(response => {
@@ -92,7 +120,7 @@ export const postGame = () => (dispatch, getState) => {
         const { id, player_1, player_2, bearer_token } = response;
 
         dispatch({
-            type: 'POST_CREATE_GAME_SUCCESS',
+            type: POST_CREATE_GAME_SUCCESS,
             gameId: id,
             player1Id: player_1,
             player2Id: player_2,
@@ -100,7 +128,7 @@ export const postGame = () => (dispatch, getState) => {
 
         dispatch(setBearerToken(bearer_token));
 
-    }, error => handleFetchError(error, dispatch, 'POST_CREATE_GAME_FAILURE'));
+    }, error => handleFetchError(error, dispatch, POST_CREATE_GAME_FAILURE));
 };
 
 export const fetchHistory = () => (dispatch, getState) => {
@@ -108,7 +136,7 @@ export const fetchHistory = () => (dispatch, getState) => {
     const { bearerToken } = state;
 
     dispatch({
-        type: 'FETCH_HISTORY_REQUEST',
+        type: FETCH_HISTORY_REQUEST,
     });
 
     api.getHistory(bearerToken).then(response => {
@@ -118,11 +146,11 @@ export const fetchHistory = () => (dispatch, getState) => {
         dispatch(setBearerToken(bearer_token));
 
         dispatch({
-            type: 'FETCH_HISTORY_SUCCESS',
+            type: FETCH_HISTORY_SUCCESS,
             history,
         });
 
-    }, error => handleFetchError(error, dispatch, 'FETCH_HISTORY_FAILURE'));
+    }, error => handleFetchError(error, dispatch, FETCH_HISTORY_FAILURE));
 };
 
 export const getSymbol = (game, action, xId) => {
@@ -166,7 +194,7 @@ const handleFetchError = (error, dispatch, actionType) => {
 
 export const dismissError = () => dispatch =>
     dispatch({
-        type: 'DISMISS_ERROR',
+        type: DISMISS_ERROR,
     });
 
 export const getGameId = state => state.game ? state.game.game_id : null;

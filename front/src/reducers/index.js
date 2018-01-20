@@ -1,8 +1,36 @@
 import { MAX_RECENTS } from '../constants';
+import {
+    ADD_RECENT_GAME,
+
+    POST_MOVE_REQUEST,
+    POST_MOVE_SUCCESS,
+    POST_MOVE_FAILURE,
+
+    SET_PLAYER_1_NAME,
+    SET_PLAYER_2_NAME,
+
+    SET_X_O,
+
+    SET_BEARER_TOKEN,
+
+    POST_CREATE_PLAYERS_REQUEST,
+    POST_CREATE_PLAYERS_SUCCESS,
+    POST_CREATE_PLAYERS_FAILURE,
+
+    POST_CREATE_GAME_REQUEST,
+    POST_CREATE_GAME_SUCCESS,
+    POST_CREATE_GAME_FAILURE,
+
+    FETCH_HISTORY_REQUEST,
+    FETCH_HISTORY_SUCCESS,
+    FETCH_HISTORY_FAILURE,
+
+    DISMISS_ERROR,
+} from '../constants';
 
 const reducer = (state = {}, action) => {
     switch (action.type) {
-        case 'POST_MOVE_SUCCESS':
+        case POST_MOVE_SUCCESS:
             return {
                 ...state,
                 game: {
@@ -12,19 +40,19 @@ const reducer = (state = {}, action) => {
                 isFetching: false,
             };
 
-        case 'SET_PLAYER_1_NAME':
+        case SET_PLAYER_1_NAME:
             return {
                 ...state,
                 player1Name: action.player1Name,
             };
 
-        case 'SET_PLAYER_2_NAME':
+        case SET_PLAYER_2_NAME:
             return {
                 ...state,
                 player2Name: action.player2Name,
             };
 
-        case 'POST_CREATE_PLAYERS_SUCCESS':
+        case POST_CREATE_PLAYERS_SUCCESS:
             return {
                 ...state,
                 player1Id: action.player1Id,
@@ -32,14 +60,14 @@ const reducer = (state = {}, action) => {
                 isFetching: false,
             };
 
-        case 'SET_X_O':
+        case SET_X_O:
             return {
                 ...state,
                 xId: action.xId,
                 oId: action.oId,
             };
 
-        case 'POST_CREATE_GAME_SUCCESS':
+        case POST_CREATE_GAME_SUCCESS:
             const { player1Name, player2Name } = state;
             const { gameId, player1Id, player2Id } = action;
 
@@ -60,14 +88,14 @@ const reducer = (state = {}, action) => {
                 isFetching: false,
             };
 
-        case 'FETCH_HISTORY_SUCCESS':
+        case FETCH_HISTORY_SUCCESS:
             return {
                 ...state,
                 history: action.history,
                 isFetching: false,
             };
 
-        case 'ADD_RECENT_GAME':
+        case ADD_RECENT_GAME:
             const game = {
                 ...state.game,
                 player_id_won: action.playerIdWon,
@@ -87,32 +115,32 @@ const reducer = (state = {}, action) => {
                 recents: [game, ...recents],
             };
 
-        case 'SET_BEARER_TOKEN':
+        case SET_BEARER_TOKEN:
             return {
                 ...state,
                 bearerToken: action.bearerToken,
             };
 
-        case 'POST_MOVE_REQUEST':
-        case 'POST_CREATE_PLAYERS_REQUEST':
-        case 'POST_CREATE_GAME_REQUEST':
-        case 'FETCH_HISTORY_REQUEST':
+        case POST_MOVE_REQUEST:
+        case POST_CREATE_PLAYERS_REQUEST:
+        case POST_CREATE_GAME_REQUEST:
+        case FETCH_HISTORY_REQUEST:
             return {
                 ...state,
                 isFetching: true,
             };
 
-        case 'POST_MOVE_FAILURE':
-        case 'POST_CREATE_PLAYERS_FAILURE':
-        case 'POST_CREATE_GAME_FAILURE':
-        case 'FETCH_HISTORY_FAILURE':
+        case POST_MOVE_FAILURE:
+        case POST_CREATE_PLAYERS_FAILURE:
+        case POST_CREATE_GAME_FAILURE:
+        case FETCH_HISTORY_FAILURE:
             return {
                 ...state,
                 isFetching: false,
                 errorMessage: action.message,
             };
 
-        case 'DISMISS_ERROR':
+        case DISMISS_ERROR:
             return {
                 ...state,
                 errorMessage: '',
