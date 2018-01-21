@@ -41,6 +41,11 @@ const Create = ({
                     Play With Bot
                 </Checkbox>
 
+                <a href="https://t.me/hitrov_ttt_bot" target="_blank" className="create-player-form__telegram">
+                    <img src="/telegram-logo.png" alt="Telegram Bot" width={25} height={25} className="create-player-form__telegram-icon"/>
+                    Also you can play in Telegram Messenger!
+                </a>
+
                 <div className="create-player-form__actions">
 
                     <Button
@@ -48,7 +53,7 @@ const Create = ({
                         onClick={onCreatePlayersClick}
                         disabled={isCreatePlayersButtonDisabled}
                     >
-                        Create Players
+                        Create
                     </Button>
 
                     {player1Id && player2Id &&

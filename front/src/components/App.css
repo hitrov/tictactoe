@@ -12,7 +12,7 @@ body {
 
 .header__link {
     display: flex;
-    font-size: 28px;
+    font-size: 22px;
     color: #1db954;
 }
 
@@ -21,7 +21,7 @@ body {
 }
 
 .header__link:hover, .header__link:focus, .header__link.active {
-    font-size: 28px;
+    font-size: 22px;
     color: #ffffff;
     text-decoration: underline;
 }
@@ -56,9 +56,21 @@ body {
     margin: 16px 0;
 }
 
+.create-player-form__telegram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.create-player-form__telegram-icon {
+    margin-right: 6px;
+}
+
 .create-player-form__actions {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .create-players-btn, .game__new-game-btn {
@@ -67,6 +79,7 @@ body {
     border: none;
     display: block;
     padding: 10px 40px;
+    margin: 6px 0;
     font-size: 20px;
 }
 
@@ -112,7 +125,10 @@ body {
     padding: 0;
 }
 
-.history-table {
+.table-responsive {
     margin: 16px 0;
+}
+
+.history-table {
     background-color: white;
 }

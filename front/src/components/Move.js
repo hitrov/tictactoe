@@ -4,9 +4,10 @@ import { Col } from 'react-bootstrap';
 const style = {
     height: '111px',
     border: '1px black solid',
-    fontSize: '86pt',
-    lineHeight: '86pt',
+    fontSize: '78pt',
+    lineHeight: '83pt',
     textAlign: 'center',
+    padding: 0,
 };
 
 const Move = props => {
@@ -28,9 +29,6 @@ const Move = props => {
     return (
         <Col
             xs={4}
-            sm={4}
-            md={4}
-            lg={4}
             style={{
             ...style,
             cursor,
