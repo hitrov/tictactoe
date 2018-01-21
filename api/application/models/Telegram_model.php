@@ -338,12 +338,13 @@ class Telegram_model extends MY_Model {
 
     /**
      * @param int $game_id
+     * @param bool $all_actions
      *
      * @return stdClass
      */
-    public function get_keyboard_markup(int $game_id): stdClass {
+    public function get_keyboard_markup(int $game_id, bool $all_actions = false): stdClass {
         $replyKeyboardMarkup = new stdClass();
-        $available_actions = $this->move_model->get_available_actions($game_id);
+        $available_actions = !$all_actions ? $this->move_model->get_available_actions($game_id) : Game_model::ALL_ACTIONS;
 
         $keyboard = [];
         foreach($available_actions as $action) {

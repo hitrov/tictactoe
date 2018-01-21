@@ -66,7 +66,8 @@ class Telegram extends MY_Controller {
             $this->telegram_model->wait_for_new_game($telegram_id);
 
             $notice = $e->getMessage();
-            $this->telegram_bot->sendMessage($this->chat_id, $notice, null, 'HTML');
+            $keyboard_markup = $this->telegram_model->get_keyboard_markup($telegram_user['game_id'], true);
+            $this->telegram_bot->sendMessage($this->chat_id, $notice, $keyboard_markup, 'HTML');
 
         } catch(Base_http_exception $e) {
             $notice = $e->getMessage();
