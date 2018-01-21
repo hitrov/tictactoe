@@ -11,8 +11,6 @@ https://getcomposer.org/download/
 3. NodeJS and NPM
 https://nodejs.org/en/
 
-If you wanna test API only, please import `./postman_collection.json` to the Postman app. No frontend (node, npm) required in that case.
-
 Clone the repository
 
 Create the database named `tictactoe`
@@ -51,6 +49,11 @@ Open new terminal window and go to project directory
 Thank you!
 
 P.S. 
+
+If you wanna test API only, please import `./postman_collection.json` to the Postman app. No frontend (node, npm) required in that case.
+
+Here're some examples 
+https://documenter.getpostman.com/view/3217800/tictactoe/7TKgsFC
 
 If you use PHPStorm and wanna have working autocomplete, please select `/api/system/core/Controller.php` and `/api/system/core/Model.php` files, right click and set Mark as Plain Text.
 
