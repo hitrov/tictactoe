@@ -65,14 +65,17 @@ class Telegram extends MY_Controller {
         } catch(GameFinished $e) {
             $this->telegram_model->wait_for_new_game($telegram_id);
 
-            $notice = $e->getMessage();
+            $final_result = $this->telegram_model->get_final_result();
             $keyboard_markup = $this->telegram_model->get_keyboard_markup($telegram_user['game_id'], true);
-            $this->telegram_bot->sendMessage($this->chat_id, $notice, $keyboard_markup, 'HTML');
+            $this->telegram_bot->sendMessage($this->chat_id, $final_result, $keyboard_markup, 'HTML');
+
+            $notice = $e->getMessage();
+            $this->telegram_bot->sendMessage($this->chat_id, $notice, null, 'HTML');
 
         } catch(Base_http_exception $e) {
-            $notice = $e->getMessage();
+            $message = $e->getMessage();
             $keyboard_markup = $this->telegram_model->get_keyboard_markup($telegram_user['game_id']);
-            $this->telegram_bot->sendMessage($this->chat_id, $notice, $keyboard_markup, 'HTML');
+            $this->telegram_bot->sendMessage($this->chat_id, $message, $keyboard_markup, 'HTML');
 
         }
     }

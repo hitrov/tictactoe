@@ -19,6 +19,8 @@ class Telegram_model extends MY_Model {
 
     const API_BASE_URL = 'https://api.ttt.hitrov.com';
 
+    private $final_result = '';
+
     public function __construct() {
         parent::__construct();
         $this->load->model('game_model');
@@ -37,7 +39,6 @@ class Telegram_model extends MY_Model {
             'telegram_id' => $telegram_id,
             'username' => $username,
             'first_name' => $first_name,
-            'waiting_for_action' => 'new_game',
         ]);
 
         $telegram_user = $this->get($this->db->insert_id());
@@ -298,6 +299,10 @@ class Telegram_model extends MY_Model {
         return $response;
     }
 
+    public function get_final_result(): string {
+        return $this->final_result;
+    }
+
     /**
      * @param int $telegram_id
      * @param string $request
@@ -331,6 +336,7 @@ class Telegram_model extends MY_Model {
         $actions = $this->move_model->get_game_actions_by_player($game_id, $telegram_user['player_id']);
         $message = $this->telegram_bot->getMessage(Game_model::ALL_ACTIONS, $actions);
 
+        $this->final_result = $message;
         if (!empty($api_response['player_id_won']) && !empty($api_response['won_combination'])) {
             if ($api_response['player_id_won'] == $telegram_user['player_id']) {
                 throw new Won('Win!');
