@@ -35,6 +35,11 @@ Change directory in terminal to this project directory.
 
 Optional: you can use production API with local frontend `API_BASE_URL` = `https://api.ttt.hitrov.com` as well if you had issues with backend setup
 
+Notice: Telegram Bot was implemented in this task,
+https://t.me/hitrov_ttt_bot
+
+it uses the same API as frontend (web app)
+
 Open new terminal window and go to project directory
 
 `cd ./front/`
