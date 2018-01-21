@@ -313,7 +313,6 @@ class Move_model extends MY_Model {
     }
 
     private function get_action(array $player_actions, array $bot_actions): int {
-        $all_actions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
         $done_actions = array_merge($player_actions, $bot_actions);
 
         // check maybe bot could win in this move
@@ -336,7 +335,7 @@ class Move_model extends MY_Model {
         }
 
         // random free position
-        $possible_actions = array_diff($all_actions, $done_actions);
+        $possible_actions = array_diff(Game_model::ALL_ACTIONS, $done_actions);
         $random_key = array_rand($possible_actions);
         $respond_action = $possible_actions[$random_key];
 

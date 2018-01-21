@@ -9,6 +9,8 @@
 class Game_model extends MY_Model {
     public $table_name = 'game';
 
+    const ALL_ACTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
     public function create(int $player_1, int $player_2): int {
         $this->db->insert($this->table_name, [
             'player_1' => $player_1,

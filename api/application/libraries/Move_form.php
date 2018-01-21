@@ -12,7 +12,7 @@ class Move_form extends MY_Form_validation {
         parent::__construct($this->rules);
     }
 
-    private $rules = [
+    protected $rules = [
         [
             'field' => 'action',
             'label' => '',

@@ -52,25 +52,4 @@ class Game extends MY_Controller {
         ];
         $this->send_response();
     }
-
-    public function draw() {
-        if ($this->processed) {
-            return;
-        }
-
-        $actions = [1,2,4,5,7];
-
-        $field = [];
-        foreach ([1,2,3,4,5,6,7,8,9] as $possible_action) {
-            $symbol = $possible_action % 2 === 0 ? 'O' : 'X';
-            if (in_array($possible_action, $actions)) {
-                $field[$possible_action] = $symbol;
-                continue;
-            }
-            $field[$possible_action] = ' ';
-        }
-        $this->response = $field;
-
-        $this->send_response();
-    }
 }

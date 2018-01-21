@@ -11,6 +11,10 @@ class MY_Controller extends CI_Controller {
 
     protected $http_code = 200;
 
+    const HEADER_CONTENT_TYPE_APPLICATION_JSON = 'application/json';
+
+    protected $content_type = self::HEADER_CONTENT_TYPE_APPLICATION_JSON;
+
     const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
     const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
     const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
@@ -82,7 +86,9 @@ class MY_Controller extends CI_Controller {
             return;
         }
 
-        $response['bearer_token'] = $bearerToken;
+        if ($this->content_type === self::HEADER_CONTENT_TYPE_APPLICATION_JSON) {
+            $response['bearer_token'] = $bearerToken;
+        }
     }
 
     protected function send_response() {
@@ -95,7 +101,7 @@ class MY_Controller extends CI_Controller {
             return;
         }
 
-        $this->output->set_content_type('application/json');
+        $this->output->set_content_type($this->content_type);
 
         $response = $this->response;
         if (!empty($this->errors)) {
