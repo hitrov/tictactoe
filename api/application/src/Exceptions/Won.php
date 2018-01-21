@@ -9,5 +9,5 @@
 namespace TicTacToe\Exceptions;
 
 
-class Draw extends GameFinished {
+class Won extends GameFinished {
 }

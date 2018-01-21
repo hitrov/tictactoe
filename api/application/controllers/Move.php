@@ -7,6 +7,7 @@ use TicTacToe\Exceptions\Draw;
 
 use TicTacToe\Exceptions\HTTP\Base_http_exception;
 use TicTacToe\Exceptions\HTTP\Bad_request;
+use TicTacToe\Exceptions\HTTP\Internal_server_error;
 
 class Move extends MY_Controller {
 
@@ -39,6 +40,11 @@ class Move extends MY_Controller {
             $action = $this->input->post('action');
 
             $token_payload = $this->jwtoken->getRequestPayload();
+
+            if (empty($token_payload['game_id'])) {
+                throw new Internal_server_error('Missing game_id in token.');
+            }
+
             $game_id = $token_payload['game_id'];
 
             $with_bot = $this->input->get('with_bot');

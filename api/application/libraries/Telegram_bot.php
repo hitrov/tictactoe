@@ -16,10 +16,10 @@ class Telegram_bot {
         $url = 'https://api.telegram.org/bot' . self::API_KEY . '/sendMessage';
         !$replyKeyboardMarkup ? $replyKeyboardMarkup = new stdClass() : '';
 
-        $postFields = array(
+        $postFields = [
             'chat_id' => $chatId,
             'text' => $text,
-        );
+        ];
 
         if ($parseMode) {
             $postFields['parse_mode'] = $parseMode;
@@ -28,10 +28,10 @@ class Telegram_bot {
         $replyKeyboardMarkup ? $postFields['reply_markup'] = json_encode($replyKeyboardMarkup) : '';
 
         $ch = curl_init($url);
-        $curlOptions = array(
+        $curlOptions = [
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $postFields,
-        );
+        ];
 
         curl_setopt_array($ch, $curlOptions);
         curl_exec($ch);
@@ -41,8 +41,8 @@ class Telegram_bot {
 
     function getMessage(array $allActions, array $actions): string {
         $response = '<pre>';
-        //$allActions = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+        $field = [];
         foreach ($allActions as $possibleAction) {
             $symbol = $possibleAction % 2 === 0 ? 'O' : 'X';
             if (in_array($possibleAction, $actions)) {

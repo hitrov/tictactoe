@@ -71,6 +71,7 @@ die('This file is used for development purposes only.');
  * @property Move_model            $move_model
  * @property Jwtoken            $jwtoken
  * @property Telegram_bot            $telegram_bot
+ * @property Telegram_model            $telegram_model
  *
  */
 class CI_Controller {
@@ -131,6 +132,7 @@ class CI_Controller {
  * @property Move_model            $move_model
  * @property Jwtoken            $jwtoken
  * @property Telegram_bot            $telegram_bot
+ * @property Telegram_model            $telegram_model
  */
 class CI_Model {
 

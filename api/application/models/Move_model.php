@@ -341,4 +341,18 @@ class Move_model extends MY_Model {
 
         return $respond_action;
     }
+
+    /**
+     * @param int $game_id
+     *
+     * @return array
+     */
+    public function get_game_actions(int $game_id): array {
+        $results = $this->db->select('action')
+            ->where('game_id', $game_id)
+            ->get($this->table_name)
+            ->result_array();
+
+        return $results ? array_column($results, 'action') : [];
+    }
 }
