@@ -6,7 +6,7 @@ import HistoryContainer from "./HistoryContainer";
 import PlayContainer from "./PlayContainer";
 import Header from '../components/Header';
 import NotFound from "../components/NotFound";
-import { dismissError } from '../actions';
+import { dismissError, dismissNotification } from '../actions';
 import {
     Route,
     Switch,
@@ -17,10 +17,14 @@ import { PATH_HOME, PATH_GAME, PATH_HISTORY } from '../constants';
 
 class Main extends Component {
     render(){
-        const { errorMessage, dismissError, player1Id, player2Id, history } = this.props;
+        const { errorMessage, dismissError, player1Id, player2Id, history, dismissNotification, notification } = this.props;
 
         return (
             <Grid>
+                {notification &&
+                <Alert bsStyle="success" onDismiss={dismissNotification}>
+                    <h4>{notification}</h4>
+                </Alert>}
                 {errorMessage &&
                 <Alert bsStyle="danger" onDismiss={dismissError}>
                     <h4>{errorMessage}</h4>
@@ -41,15 +45,17 @@ class Main extends Component {
 }
 
 Main = withRouter(connect(state => {
-    const { errorMessage, player1Id, player2Id } = state;
+    const { errorMessage, player1Id, player2Id, notification } = state;
 
     return {
         errorMessage,
         player1Id,
         player2Id,
+        notification,
     };
 }, {
     dismissError,
+    dismissNotification,
 })(Main));
 
 export default Main;

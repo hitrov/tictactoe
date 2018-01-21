@@ -26,6 +26,9 @@ import {
     FETCH_HISTORY_FAILURE,
 
     DISMISS_ERROR,
+    DISMISS_NOTIFICATION,
+    SET_NOTIFICATION,
+
     LOCAL_STORAGE_STATE,
 
     TOGGLE_PLAY_WITH_BOT,
@@ -42,7 +45,7 @@ const addRecentGame = (playerIdWon, wonCombination, dt, draw) => ({
 export const postMove = action => (dispatch, getState) => {
 
     const state = getState();
-    const { bearerToken, playWithBot } = state;
+    const { bearerToken, playWithBot, player1Id, player1Name, player2Name } = state;
 
     dispatch({
         type: POST_MOVE_REQUEST,
@@ -62,6 +65,22 @@ export const postMove = action => (dispatch, getState) => {
         });
 
         if (player_id_won || draw) {
+
+            if (player_id_won) {
+                let winnerName;
+                if (parseInt(player_id_won, 10) === player1Id) {
+                    winnerName = player1Name;
+                } else {
+                    winnerName = player2Name;
+                }
+                const notification = winnerName+' won!';
+                dispatch(setNotification(notification));
+            } else {
+                dispatch(setNotification('Draw!'));
+            }
+
+            setTimeout(() => dispatch(dismissNotification()), 1000);
+
             dispatch(addRecentGame(player_id_won, won_combination, dt, draw));
         }
 
@@ -199,6 +218,16 @@ export const dismissError = () => dispatch =>
     dispatch({
         type: DISMISS_ERROR,
     });
+
+export const dismissNotification = () => dispatch =>
+    dispatch({
+        type: DISMISS_NOTIFICATION,
+    });
+
+export const setNotification = notification => ({
+    type: SET_NOTIFICATION,
+    notification,
+});
 
 export const getGameId = state => state.game ? state.game.game_id : null;
 

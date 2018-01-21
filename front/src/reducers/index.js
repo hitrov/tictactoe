@@ -26,6 +26,8 @@ import {
     FETCH_HISTORY_FAILURE,
 
     DISMISS_ERROR,
+    DISMISS_NOTIFICATION,
+    SET_NOTIFICATION,
 
     TOGGLE_PLAY_WITH_BOT,
 } from '../constants';
@@ -152,6 +154,18 @@ const reducer = (state = {}, action) => {
             return {
                 ...state,
                 errorMessage: '',
+            };
+
+        case DISMISS_NOTIFICATION:
+            return {
+                ...state,
+                notification: '',
+            };
+
+        case SET_NOTIFICATION:
+            return {
+                ...state,
+                notification: action.notification,
             };
 
         case TOGGLE_PLAY_WITH_BOT:
