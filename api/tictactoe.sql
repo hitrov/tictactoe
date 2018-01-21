@@ -111,6 +111,7 @@ CREATE TABLE `telegram` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `telegram_id` int(11) unsigned NOT NULL,
   `player_id` int(11) unsigned DEFAULT NULL,
+  `bot_id` int(10) unsigned DEFAULT NULL,
   `game_id` int(10) unsigned DEFAULT NULL,
   `username` varchar(128) DEFAULT NULL,
   `first_name` varchar(128) DEFAULT NULL,
@@ -142,4 +143,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-21 17:51:30
+-- Dump completed on 2018-01-21 21:25:27
