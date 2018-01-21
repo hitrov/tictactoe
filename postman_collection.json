@@ -65,7 +65,8 @@
 						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+							"pm.globals.set(\"bearer_token\", data.bearer_token);",
+							"pm.environment.set(\"bearer_token\", data.bearer_token);"
 						]
 					}
 				}
@@ -128,7 +129,8 @@
 						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+							"pm.globals.set(\"bearer_token\", data.bearer_token);",
+							"pm.environment.set(\"bearer_token\", data.bearer_token);"
 						]
 					}
 				}
@@ -176,7 +178,8 @@
 						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"pm.globals.set(\"bearer_token\", data.bearer_token);"
+							"pm.globals.set(\"bearer_token\", data.bearer_token);",
+							"pm.environment.set(\"bearer_token\", data.bearer_token);"
 						]
 					}
 				}
@@ -215,6 +218,19 @@
 		},
 		{
 			"name": "move",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"pm.globals.set(\"bearer_token\", data.bearer_token);",
+							"pm.environment.set(\"bearer_token\", data.bearer_token);"
+						]
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -238,7 +254,7 @@
 					"formdata": [
 						{
 							"key": "action",
-							"value": "9",
+							"value": "2",
 							"description": "",
 							"type": "text"
 						}
