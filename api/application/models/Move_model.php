@@ -344,15 +344,28 @@ class Move_model extends MY_Model {
 
     /**
      * @param int $game_id
+     * @param int $player_id
      *
      * @return array
      */
-    public function get_game_actions(int $game_id): array {
-        $results = $this->db->select('action')
+    public function get_game_actions(int $game_id, int $player_id): array {
+        $results = $this->db->select('action, player_id')
             ->where('game_id', $game_id)
             ->get($this->table_name)
             ->result_array();
 
-        return $results ? array_column($results, 'action') : [];
+        $game_actions = [
+            'player' => [],
+            'bot' => [],
+        ];
+        foreach ($results as $row) {
+            if ($row['player_id'] == $player_id) {
+                $game_actions['player'][] = $row['action'];
+            } else {
+                $game_actions['bot'][] = $row['action'];
+            }
+        }
+
+        return $game_actions;
     }
 }

@@ -28,10 +28,6 @@ class Telegram extends MY_Controller {
 
     /**
      * @param array $object
-     *
-     * @throws Bad_request
-     * @throws \TicTacToe\Exceptions\HTTP\Internal_server_error
-     * @throws \TicTacToe\Exceptions\HTTP\OK
      */
     private function process_request(array $object) {
         $this->chat_id = $object['message']['chat']['id'];
@@ -46,6 +42,11 @@ class Telegram extends MY_Controller {
             if (empty($telegram_user)) {
 
                 $telegram_user = $this->telegram_model->create($telegram_id, $username, $first_name);
+            }
+
+            if ($request === '/start') {
+                $this->telegram_model->wait_for_new_game($telegram_id);
+                $telegram_user = $this->telegram_model->get_by_telegram_id($telegram_id);
             }
 
             switch($telegram_user['waiting_for_action']) {
@@ -66,7 +67,11 @@ class Telegram extends MY_Controller {
             $this->telegram_model->wait_for_new_game($telegram_id);
 
             $notice = $e->getMessage();
-            $this->telegram_bot->sendMessage($this->chat_id, $notice, null);
+            $this->telegram_bot->sendMessage($this->chat_id, $notice, null, 'HTML');
+
+        } catch(Base_http_exception $e) {
+            $notice = $e->getMessage();
+            $this->telegram_bot->sendMessage($this->chat_id, $notice, null, 'HTML');
 
         }
     }
@@ -94,9 +99,7 @@ class Telegram extends MY_Controller {
 
         } catch(Base_http_exception $e) {
             $message = $e->getMessage();
-
+            $this->telegram_bot->sendMessage($this->chat_id, $message, null, 'HTML');
         }
-
-        $this->telegram_bot->sendMessage($this->chat_id, $message, null, 'HTML');
 	}
 }

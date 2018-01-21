@@ -38,18 +38,27 @@ class Telegram_bot {
         curl_close($ch);
     }
 
-
+    /**
+     * @param array $allActions
+     * @param array $actions
+     *
+     * @return string
+     */
     function getMessage(array $allActions, array $actions): string {
         $response = '<pre>';
 
         $field = [];
-        foreach ($allActions as $possibleAction) {
-            $symbol = $possibleAction % 2 === 0 ? 'O' : 'X';
-            if (in_array($possibleAction, $actions)) {
-                $field[$possibleAction] = $symbol;
-                continue;
-            }
-            $field[$possibleAction] = ' ';
+
+        foreach ($allActions as $action) {
+            $field[$action] = ' ';
+        }
+
+        foreach ($actions['player'] as $action) {
+            $field[$action] = 'X';
+        }
+
+        foreach ($actions['bot'] as $action) {
+            $field[$action] = 'O';
         }
 
         $response .= "$field[1] | $field[2] | $field[3]" . "\r\n";

@@ -138,6 +138,7 @@ class Telegram_model extends MY_Model {
      * @param string $player_name
      *
      * @return array
+     * @throws Bad_request
      * @throws CreateNewGame
      */
     private function create_players(string $player_name): array {
@@ -157,6 +158,7 @@ class Telegram_model extends MY_Model {
      * @param string $bearer_token
      *
      * @return array
+     * @throws Bad_request
      * @throws CreateNewGame
      */
     private function create_game(string $bearer_token): array {
@@ -174,6 +176,7 @@ class Telegram_model extends MY_Model {
      * @param string $bearer_token
      *
      * @return array
+     * @throws Bad_request
      * @throws CreateNewGame
      */
     private function call_api(string $uri = '', string $method = 'GET', array $postFields = [], string $bearer_token = ''): array {
@@ -213,6 +216,12 @@ class Telegram_model extends MY_Model {
                     'errors' => [$response],
                 ];
             }
+
+            // handling request errors
+            if ($http_code === 400 && !empty($response_array['errors'])) {
+                throw new Bad_request(implode(', ', $response_array['errors']));
+            }
+
         } else {
             $response_array = [];
         }
@@ -224,6 +233,7 @@ class Telegram_model extends MY_Model {
      * @param int $telegram_id
      * @param string $first_name
      *
+     * @throws Bad_request
      * @throws CreateNewGame
      * @throws Internal_server_error
      * @throws OK
@@ -252,7 +262,10 @@ class Telegram_model extends MY_Model {
         $bearer_token = $api_response['bearer_token'];
         $this->telegram_model->update_bearer_token($telegram_id, $bearer_token);
 
-        $message = $this->telegram_bot->getMessage(Game_model::ALL_ACTIONS, []);
+        $message = $this->telegram_bot->getMessage(Game_model::ALL_ACTIONS, [
+            'player' => [],
+            'bot' => [],
+        ]);
         throw new OK($message);
     }
 
@@ -261,6 +274,7 @@ class Telegram_model extends MY_Model {
      * @param string $bearer_token
      *
      * @return array
+     * @throws Bad_request
      * @throws CreateNewGame
      */
     private function create_move(int $action, string $bearer_token): array {
@@ -305,7 +319,7 @@ class Telegram_model extends MY_Model {
         $bearer_token = $api_response['bearer_token'];
         $this->telegram_model->update_bearer_token($telegram_id, $bearer_token);
 
-        $actions = $this->move_model->get_game_actions($game_id);
+        $actions = $this->move_model->get_game_actions($game_id, $telegram_user['player_id']);
         $message = $this->telegram_bot->getMessage(Game_model::ALL_ACTIONS, $actions);
 
         if (!empty($api_response['player_id_won']) && !empty($api_response['won_combination'])) {
