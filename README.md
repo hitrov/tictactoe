@@ -21,6 +21,8 @@ Update database credentials (`username` and `password`) in `api/application/conf
 
 (and maybe `host` and `database` if you can't use suggested name)
 
+Import `./api/tictactoe.sql`
+
 Change directory in terminal to this project directory.
 
 `cd ./api/`
@@ -28,6 +30,10 @@ Change directory in terminal to this project directory.
 `composer install`
 
 `php -S localhost:8000`
+
+(if for some reason you can't use 8000 port or even localhost, please update `API_BASE_URL` constant in `/front/src/constants/index.js`)
+
+Optional: you can use production API with local frontend `API_BASE_URL` = `https://api.ttt.hitrov.com` as well if you had issues with backend setup
 
 Open new terminal window and go to project directory
 
@@ -38,3 +44,14 @@ Open new terminal window and go to project directory
 `npm start`
 
 Thank you!
+
+P.S. 
+
+if you wanna debug the project (e.g. xdebug), probably you wanna use a Cookie named XDEBUG_SESSION and 
+https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en
+
+In that case 
+
+1. Uncomment `credentials: 'include'` in `front/src/api/index.js`, line 30
+2. Uncomment `self::HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS => 'true'` in `api/application/core/MY_Controller.php`, line 31 
+3. Set `HEADER_ACCESS_CONTROL_ALLOW_ORIGIN` from `*` to `http://localhost:3000` in `api/application/core/MY_Controller.php`, line 28
