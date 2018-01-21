@@ -251,7 +251,7 @@ class Telegram_model extends MY_Model {
         $this->jwtoken->setPayload([
             'player_1' => $player_id,
             'player_2' => $bot_id,
-        ]);
+        ], true);
 
         $bearer_token = $this->jwtoken->getToken();
 
@@ -272,10 +272,7 @@ class Telegram_model extends MY_Model {
         $player_id = $telegram_user['player_id'];
         $bot_id = $telegram_user['bot_id'];
 
-        if ($player_id && $bot_id) {
-            $bearer_token = $this->get_jwt_token($player_id, $bot_id);
-
-        } else {
+        if (!$player_id || !$bot_id) {
             $api_response = $this->create_players($first_name);
             if (empty($api_response)) {
                 throw new Internal_server_error('Player creation error.');
@@ -283,10 +280,9 @@ class Telegram_model extends MY_Model {
 
             $player_id = $api_response['player_1'];
             $bot_id = $api_response['player_2'];
-
-            $bearer_token = $api_response['bearer_token'];
         }
 
+        $bearer_token = $this->get_jwt_token($player_id, $bot_id);
         $this->telegram_model->update_player($telegram_id, $player_id, $bot_id, $bearer_token);
 
         $api_response = $this->create_game($bearer_token);

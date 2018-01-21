@@ -10,6 +10,8 @@ class Jwtoken {
         "alg" => "HS256",
     ];
 
+    const WHITE_LIST_IP_ADDRESS = '0.0.0.0';
+
     const VALID_SECONDS = 1800; // 30 min
 
     /**
@@ -39,11 +41,11 @@ class Jwtoken {
         return $this->requestPayload;
     }
 
-    public function setPayload(array $payload)
+    public function setPayload(array $payload, bool $localhost = false)
     {
         $this->payload = array_merge($this->payload, $payload, [
             'valid_until' => time() + self::VALID_SECONDS,
-            'ip_address' => $_SERVER['REMOTE_ADDR'],
+            'ip_address' => !$localhost ? $_SERVER['REMOTE_ADDR'] : self::WHITE_LIST_IP_ADDRESS,
         ]);
     }
 
@@ -122,7 +124,11 @@ class Jwtoken {
             $this->setRequestPayload($payload);
 
             $requestPayload = $this->getRequestPayload();
-            if ($_SERVER['REMOTE_ADDR'] !== $requestPayload['ip_address']) {
+
+            if (
+                $requestPayload['ip_address'] !== self::WHITE_LIST_IP_ADDRESS &&
+                $_SERVER['REMOTE_ADDR'] !== $requestPayload['ip_address'])
+            {
                 throw new Unauthorized('IP address for token is invalid.');
             }
 
