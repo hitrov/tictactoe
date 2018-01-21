@@ -52,6 +52,8 @@ Thank you!
 
 P.S. 
 
+If you use PHPStorm and wanna have working autocomplete, please select `/api/system/core/Controller.php` and `/api/system/core/Model.php` files, right click and set Mark as Plain Text.
+
 if you wanna debug the project (e.g. xdebug), probably you wanna use a Cookie named XDEBUG_SESSION and 
 https://chrome.google.com/webstore/detail/xdebug-helper/eadndfjplgieldjbigjakmdgkmoaaaoc?hl=en
 
