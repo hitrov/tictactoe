@@ -22,6 +22,7 @@ class Telegram_model extends MY_Model {
     public function __construct() {
         parent::__construct();
         $this->load->model('game_model');
+        $this->load->model('move_model');
     }
 
     /**
@@ -318,7 +319,7 @@ class Telegram_model extends MY_Model {
         $bearer_token = $api_response['bearer_token'];
         $this->telegram_model->update_bearer_token($telegram_id, $bearer_token);
 
-        $actions = $this->move_model->get_game_actions($game_id, $telegram_user['player_id']);
+        $actions = $this->move_model->get_game_actions_by_player($game_id, $telegram_user['player_id']);
         $message = $this->telegram_bot->getMessage(Game_model::ALL_ACTIONS, $actions);
 
         if (!empty($api_response['player_id_won']) && !empty($api_response['won_combination'])) {
@@ -333,5 +334,26 @@ class Telegram_model extends MY_Model {
         }
 
         throw new OK($message);
+    }
+
+    /**
+     * @param int $game_id
+     *
+     * @return stdClass
+     */
+    public function get_keyboard_markup(int $game_id): stdClass {
+        $replyKeyboardMarkup = new stdClass();
+        $available_actions = $this->move_model->get_available_actions($game_id);
+
+        $keyboard = [];
+        foreach($available_actions as $action) {
+            $keyboard[] = [
+                'text' => $action,
+            ];
+        }
+
+        $replyKeyboardMarkup->keyboard = [$keyboard];
+
+        return $replyKeyboardMarkup;
     }
 }

@@ -37,10 +37,9 @@ class Telegram extends MY_Controller {
         $username = $object['message']['from']['username'] ?? '';
         $first_name = $object['message']['from']['first_name'] ?? 'Telegram User';
 
+        $telegram_user = $this->telegram_model->get_by_telegram_id($telegram_id);
         try {
-            $telegram_user = $this->telegram_model->get_by_telegram_id($telegram_id);
             if (empty($telegram_user)) {
-
                 $telegram_user = $this->telegram_model->create($telegram_id, $username, $first_name);
             }
 
@@ -71,7 +70,8 @@ class Telegram extends MY_Controller {
 
         } catch(Base_http_exception $e) {
             $notice = $e->getMessage();
-            $this->telegram_bot->sendMessage($this->chat_id, $notice, null, 'HTML');
+            $keyboard_markup = $this->telegram_model->get_keyboard_markup($telegram_user['game_id']);
+            $this->telegram_bot->sendMessage($this->chat_id, $notice, $keyboard_markup, 'HTML');
 
         }
     }

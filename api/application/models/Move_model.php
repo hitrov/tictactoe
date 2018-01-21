@@ -348,7 +348,7 @@ class Move_model extends MY_Model {
      *
      * @return array
      */
-    public function get_game_actions(int $game_id, int $player_id): array {
+    public function get_game_actions_by_player(int $game_id, int $player_id): array {
         $results = $this->db->select('action, player_id')
             ->where('game_id', $game_id)
             ->get($this->table_name)
@@ -367,5 +367,30 @@ class Move_model extends MY_Model {
         }
 
         return $game_actions;
+    }
+
+    /**
+     * @param int $game_id
+     *
+     * @return array
+     */
+    private function get_game_actions(int $game_id): array {
+        $results = $this->db->select('action')
+            ->where('game_id', $game_id)
+            ->get($this->table_name)
+            ->result_array();
+
+        return $results ? array_column($results, 'action') : [];
+    }
+
+    /**
+     * @param int $game_id
+     *
+     * @return array
+     */
+    public function get_available_actions(int $game_id): array {
+        $game_actions = $this->get_game_actions($game_id);
+
+        return array_diff(Game_model::ALL_ACTIONS, $game_actions);
     }
 }
