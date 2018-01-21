@@ -391,7 +391,7 @@ class Telegram_model extends MY_Model {
         } else {
             $available_actions = !$start && $game_id ?
                 $this->move_model->get_available_actions($game_id) :
-                ['/start'];
+                ['/start', '/history'];
         }
 
         $keyboard = [];
