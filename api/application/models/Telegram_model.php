@@ -49,17 +49,19 @@ class Telegram_model extends MY_Model {
     /**
      * @param int $telegram_id
      * @param int $player_id
+     * @param int $bot_id
      * @param string $bearer_token
      *
      * @return int
      */
-    public function update_player(int $telegram_id, int $player_id, string $bearer_token): int {
+    public function update_player(int $telegram_id, int $player_id, int $bot_id, string $bearer_token): int {
         $this->db
             ->where([
                 'telegram_id' => $telegram_id,
             ])
             ->update($this->table_name, [
                 'player_id' => $player_id,
+                'bot_id' => $bot_id,
                 'bearer_token' => $bearer_token,
                 'waiting_for_action' => 'move',
             ]);
@@ -240,6 +242,23 @@ class Telegram_model extends MY_Model {
     }
 
     /**
+     * @param int $player_id
+     * @param int $bot_id
+     *
+     * @return string
+     */
+    private function get_jwt_token(int $player_id, int $bot_id): string {
+        $this->jwtoken->setPayload([
+            'player_1' => $player_id,
+            'player_2' => $bot_id,
+        ]);
+
+        $bearer_token = $this->jwtoken->getToken();
+
+        return $bearer_token;
+    }
+
+    /**
      * @param int $telegram_id
      * @param string $first_name
      *
@@ -249,17 +268,26 @@ class Telegram_model extends MY_Model {
      * @throws OK
      */
     public function new_game(int $telegram_id, string $first_name) {
-        $api_response = $this->create_players($first_name);
-        if (empty($api_response)) {
-            throw new Internal_server_error('Player creation error.');
+        $telegram_user = $this->telegram_model->get_by_telegram_id($telegram_id);
+        $player_id = $telegram_user['player_id'];
+        $bot_id = $telegram_user['bot_id'];
+
+        if ($player_id && $bot_id) {
+            $bearer_token = $this->get_jwt_token($player_id, $bot_id);
+
+        } else {
+            $api_response = $this->create_players($first_name);
+            if (empty($api_response)) {
+                throw new Internal_server_error('Player creation error.');
+            }
+
+            $player_id = $api_response['player_1'];
+            $bot_id = $api_response['player_2'];
+
+            $bearer_token = $api_response['bearer_token'];
         }
 
-        $player_id = $api_response['player_1'];
-        //$bot_id = $api_response['player_2'];
-
-        $bearer_token = $api_response['bearer_token'];
-
-        $this->telegram_model->update_player($telegram_id, $player_id, $bearer_token);
+        $this->telegram_model->update_player($telegram_id, $player_id, $bot_id, $bearer_token);
 
         $api_response = $this->create_game($bearer_token);
 
