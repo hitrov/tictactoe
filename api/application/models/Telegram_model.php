@@ -418,7 +418,7 @@ class Telegram_model extends MY_Model {
             }
 
             if ($item['player_id_won']) {
-                if ($item['player_id_won'] == $item['player_1']) {
+                if ($item['player_id_won'] == $item['player_1']['id']) {
                     $result = 'Won';
                 } else {
                     $result = 'Lost';
