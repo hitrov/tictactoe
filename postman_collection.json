@@ -7,6 +7,56 @@
 	},
 	"item": [
 		{
+			"name": "telegram",
+			"description": "",
+			"item": [
+				{
+					"name": "start",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "XDEBUG_SESSION=PHPSTORM; "
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"update_id\":916991278,\n\"message\":{\"message_id\":3,\"from\":{\"id\":158348082,\"is_bot\":false,\"first_name\":\"Alexander\",\"username\":\"hitrov\",\"language_code\":\"en-LT\"},\"chat\":{\"id\":158348082,\"first_name\":\"Alexander\",\"username\":\"hitrov\",\"type\":\"private\"},\"date\":1516530911,\"text\":\"/start\",\"entities\":[{\"offset\":0,\"length\":6,\"type\":\"bot_command\"}]}}"
+						},
+						"url": {
+							"raw": "{{tic_tac_toe_api_url}}/telegram/?token=DEC5233158CD8972D0E83A8B6C7ACD14320A52D9AF37D71A9E29566EB349DD62287EFAF5A3F71F4B6DB2DB1045FB0CEAF5AB3A7F4ACF391B4FB682B2448AF4F5",
+							"host": [
+								"{{tic_tac_toe_api_url}}"
+							],
+							"path": [
+								"telegram",
+								""
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "DEC5233158CD8972D0E83A8B6C7ACD14320A52D9AF37D71A9E29566EB349DD62287EFAF5A3F71F4B6DB2DB1045FB0CEAF5AB3A7F4ACF391B4FB682B2448AF4F5",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "history",
 			"event": [
 				{
@@ -91,13 +141,13 @@
 					"formdata": [
 						{
 							"key": "player_1",
-							"value": "JohnDoe",
+							"value": "john doe 123",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "player_2",
-							"value": "MrSmith",
+							"value": "mr smith 12 ",
 							"description": "",
 							"type": "text"
 						}
@@ -188,19 +238,27 @@
 					"formdata": [
 						{
 							"key": "action",
-							"value": "4",
+							"value": "9",
 							"description": "",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{tic_tac_toe_api_url}}/move",
+					"raw": "{{tic_tac_toe_api_url}}/move/?with_bot=1",
 					"host": [
 						"{{tic_tac_toe_api_url}}"
 					],
 					"path": [
-						"move"
+						"move",
+						""
+					],
+					"query": [
+						{
+							"key": "with_bot",
+							"value": "1",
+							"equals": true
+						}
 					]
 				},
 				"description": ""
