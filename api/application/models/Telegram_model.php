@@ -78,6 +78,7 @@ class Telegram_model extends MY_Model {
                 'telegram_id' => $telegram_id,
             ])
             ->update($this->table_name, [
+                'game_id' => null,
                 'waiting_for_action' => 'new_game',
             ]);
 
@@ -359,9 +360,15 @@ class Telegram_model extends MY_Model {
      */
     public function get_keyboard_markup(int $game_id = null, bool $start = false): stdClass {
         $replyKeyboardMarkup = new stdClass();
-        $available_actions = !$start && $game_id ?
-            $this->move_model->get_available_actions($game_id) :
-            ['/start'];
+
+        // starting new game
+        if (!$game_id) {
+            $available_actions = Game_model::ALL_ACTIONS;
+        } else {
+            $available_actions = !$start && $game_id ?
+                $this->move_model->get_available_actions($game_id) :
+                ['/start'];
+        }
 
         $keyboard = [];
         foreach($available_actions as $action) {
