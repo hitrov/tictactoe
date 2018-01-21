@@ -17,8 +17,7 @@ use TicTacToe\Exceptions\CreateNewGame;
 class Telegram_model extends MY_Model {
     public $table_name = 'telegram';
 
-    //const API_BASE_URL = 'https://api.ttt.hitrov.com';
-    const API_BASE_URL = 'http://tictact.oe:8002';
+    const API_BASE_URL = 'https://api.ttt.hitrov.com';
 
     public function __construct() {
         parent::__construct();
