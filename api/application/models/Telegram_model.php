@@ -140,6 +140,7 @@ class Telegram_model extends MY_Model {
      * @return array
      * @throws Bad_request
      * @throws CreateNewGame
+     * @throws Internal_server_error
      */
     private function create_players(string $player_name): array {
         $uri = '/player/create_players';
@@ -160,6 +161,7 @@ class Telegram_model extends MY_Model {
      * @return array
      * @throws Bad_request
      * @throws CreateNewGame
+     * @throws Internal_server_error
      */
     private function create_game(string $bearer_token): array {
         $uri = '/game';
@@ -178,6 +180,7 @@ class Telegram_model extends MY_Model {
      * @return array
      * @throws Bad_request
      * @throws CreateNewGame
+     * @throws Internal_server_error
      */
     private function call_api(string $uri = '', string $method = 'GET', array $postFields = [], string $bearer_token = ''): array {
         $ch = curl_init(self::API_BASE_URL . $uri);
@@ -202,6 +205,7 @@ class Telegram_model extends MY_Model {
         curl_setopt_array($ch, $curlOptions);
         $response = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_error = curl_error($ch);
         curl_close($ch);
 
         // handling expired token
@@ -209,21 +213,25 @@ class Telegram_model extends MY_Model {
             throw new CreateNewGame('Game expired. Please start over.');
         }
 
-        if ($response !== false) {
-            $response_array = json_decode($response, true);
-            if ($response_array === false) {
-                $response_array = [
-                    'errors' => [$response],
-                ];
-            }
-
-            // handling request errors
-            if ($http_code === 400 && !empty($response_array['errors'])) {
-                throw new Bad_request(implode(', ', $response_array['errors']));
-            }
-
+        if ($curl_error) {
+            throw new Internal_server_error($curl_error);
         } else {
-            $response_array = [];
+            if ($response !== false) {
+                $response_array = json_decode($response, true);
+                if ($response_array === false) {
+                    $response_array = [
+                        'errors' => [$response],
+                    ];
+                }
+
+                // handling request errors
+                if ($http_code === 400 && !empty($response_array['errors'])) {
+                    throw new Bad_request(implode(', ', $response_array['errors']));
+                }
+
+            } else {
+                $response_array = [];
+            }
         }
 
         return $response_array;
@@ -276,6 +284,7 @@ class Telegram_model extends MY_Model {
      * @return array
      * @throws Bad_request
      * @throws CreateNewGame
+     * @throws Internal_server_error
      */
     private function create_move(int $action, string $bearer_token): array {
         $uri = '/move/?with_bot=1';
@@ -313,7 +322,7 @@ class Telegram_model extends MY_Model {
         $api_response = $this->create_move($request, $bearer_token);
 
         if (empty($api_response)) {
-            throw new Internal_server_error('Game creation error.');
+            throw new Internal_server_error('Move creation error.');
         }
 
         $bearer_token = $api_response['bearer_token'];
@@ -337,14 +346,16 @@ class Telegram_model extends MY_Model {
     }
 
     /**
-     * @param int $game_id
-     * @param bool $all_actions
+     * @param int|null $game_id
+     * @param bool $start
      *
      * @return stdClass
      */
-    public function get_keyboard_markup(int $game_id, bool $all_actions = false): stdClass {
+    public function get_keyboard_markup(int $game_id = null, bool $start = false): stdClass {
         $replyKeyboardMarkup = new stdClass();
-        $available_actions = !$all_actions ? $this->move_model->get_available_actions($game_id) : Game_model::ALL_ACTIONS;
+        $available_actions = !$start && $game_id ?
+            $this->move_model->get_available_actions($game_id) :
+            ['/start'];
 
         $keyboard = [];
         foreach($available_actions as $action) {
