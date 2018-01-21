@@ -381,4 +381,56 @@ class Telegram_model extends MY_Model {
 
         return $replyKeyboardMarkup;
     }
+
+    private function process_history(array $history): string {
+        $response = '';
+        foreach ($history as $item) {
+            $finished = $item['finished'] ?? '';
+
+            $result = 'Not ended';
+
+            if ($finished) {
+                $result = 'Draw';
+            }
+
+            if ($item['player_id_won']) {
+                if ($item['player_id_won'] == $item['player_1']) {
+                    $result = 'Won';
+                } else {
+                    $result = 'Lost';
+                }
+            }
+
+            $response .= "$result $finished " . "\r\n";
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param int $telegram_id
+     *
+     * @throws Bad_request
+     * @throws CreateNewGame
+     * @throws Internal_server_error
+     * @throws OK
+     */
+    public function history(int $telegram_id) {
+        $uri = '/game/history';
+        $telegram_user = $this->get_by_telegram_id($telegram_id);
+        $bearer_token = $telegram_user['bearer_token'];
+
+        $api_response = $this->call_api($uri, 'GET', [], $bearer_token);
+
+        if (empty($api_response)) {
+            throw new Internal_server_error('History request error.');
+        }
+
+        $bearer_token = $api_response['bearer_token'];
+        $this->telegram_model->update_bearer_token($telegram_id, $bearer_token);
+
+        $message = $this->process_history($api_response['history']);
+
+        throw new OK($message ? $message : 'Empty.');
+    }
 }

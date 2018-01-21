@@ -46,6 +46,8 @@ class Telegram extends MY_Controller {
             if ($request === '/start') {
                 $this->telegram_model->wait_for_new_game($telegram_id);
                 $telegram_user = $this->telegram_model->get_by_telegram_id($telegram_id);
+            } elseif ($request === '/history') {
+                $this->telegram_model->history($telegram_id);
             }
 
             switch($telegram_user['waiting_for_action']) {
