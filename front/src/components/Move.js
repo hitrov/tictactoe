@@ -2,6 +2,7 @@ import React from 'react';
 import { Col } from 'react-bootstrap';
 
 const style = {
+    width: '111px',
     height: '111px',
     border: '1px black solid',
     fontSize: '78pt',
