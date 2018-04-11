@@ -50,12 +50,10 @@ class PlayContainer extends Component {
                     player2ClassName={player2ClassName}
                 />
                 <React.Fragment>
-                    <div style={{margin: 'auto', width: '50%'}}>
-                        <Col xs={12} lg={7}>
-                            {gameId &&
-                            <PlayingField />}
-                        </Col>
-                    </div>
+                    <Col xs={12} lg={7}>
+                        {gameId &&
+                        <PlayingField />}
+                    </Col>
 
                     <Col xs={12} lg={5}>
                         {(player1Id && player2Id) &&
