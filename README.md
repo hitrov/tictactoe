@@ -1,3 +1,5 @@
+For this particular task it was required to use [Codeigniter](https://codeigniter.com) framework.
+
 Production version is available:
 
 https://ttt.hitrov.com (Web application)
