@@ -1,5 +1,4 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
 
 const style = {
     width: '111px',
@@ -28,15 +27,14 @@ const Move = props => {
     }
 
     return (
-        <Col
-            xs={4}
+        <div
             style={{
             ...style,
             cursor,
             backgroundColor,
         }} className={isWonMove ? 'won' : ''} onClick={onMoveClick}>
             {symbol}
-        </Col>
+        </div>
     );
 };
 

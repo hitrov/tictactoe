@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PlayingField from '../components/PlayingField';
 import PlayerNames from '../components/PlayerNames';
 import History from '../components/History';
-import { Col, Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import { getGameId, postGame, getActivePlayerId, getGameFinished } from '../actions';
 
 class PlayContainer extends Component {
@@ -42,35 +42,37 @@ class PlayContainer extends Component {
         }
 
         return (
-            <React.Fragment>
-                <PlayerNames
-                    player1Name={player1Name}
-                    player2Name={player2Name}
-                    player1ClassName={player1ClassName}
-                    player2ClassName={player2ClassName}
-                />
-                <React.Fragment>
-                    <Col xs={12} lg={7}>
+            <div>
+                <div>
+                    <PlayerNames
+                        player1Name={player1Name}
+                        player2Name={player2Name}
+                        player1ClassName={player1ClassName}
+                        player2ClassName={player2ClassName}
+                    />
+                </div>
+                <div>
+                    <div>
                         {gameId &&
                         <PlayingField />}
-                    </Col>
+                    </div>
 
-                    <Col xs={12} lg={5}>
+                    <div>
                         {(player1Id && player2Id) &&
                         <Button
-                            className="game__new-game-btn"
+                            className="game__new-game-btn flex"
                             onClick={this.onCreateGameClick}
                             disabled={isNewGameButtonDisabled}
                         >
                             New Game
                         </Button>}
 
-                        <Col className={'game__recent-table hidden-xs'} >
+                        <div className={'game__recent-table'} >
                             <History history={recents} />
-                        </Col>
-                    </Col>
-                </React.Fragment>
-            </React.Fragment>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

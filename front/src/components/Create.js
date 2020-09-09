@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, FormControl, ControlLabel, Button, Row, Col, Checkbox } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, Button, Checkbox } from 'react-bootstrap';
 
 const Create = ({
     player1Name,
@@ -15,8 +15,8 @@ const Create = ({
     playWithBot,
 }) =>
 
-    <Row className="show-grid">
-        <Col md={12}>
+    <div className="show-grid">
+        <div>
             <FormGroup className="create-players-form">
                 <ControlLabel className="create-player-form__label">Player 1:</ControlLabel>
                 <FormControl
@@ -45,12 +45,12 @@ const Create = ({
                     href="https://t.me/hitrov_ttt_bot"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="create-player-form__telegram">
+                    className="create-player-form__telegram flex center">
                     <img src="/telegram-logo.png" alt="Telegram Bot" width={25} height={25} className="create-player-form__telegram-icon"/>
                     Also you can play in Telegram Messenger!
                 </a>
 
-                <div className="create-player-form__actions">
+                <div className="create-player-form__actions flex space-between">
 
                     <Button
                         className="create-players-btn"
@@ -70,7 +70,7 @@ const Create = ({
 
                 </div>
             </FormGroup>
-        </Col>
-    </Row>;
+        </div>
+    </div>;
 
 export default Create;

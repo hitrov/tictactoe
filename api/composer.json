@@ -6,7 +6,9 @@
             "email": "aleksander.hitrov@betgames.tv"
         }
     ],
-    "require": {},
+    "require": {
+      "ext-json": "*"
+    },
     "autoload": {
         "psr-4": {
             "TicTacToe\\":"application/src/"

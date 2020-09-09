@@ -11,7 +11,7 @@ import {
     Route,
     Switch,
 } from 'react-router-dom';
-import { Alert, Grid } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import '../components/App.css';
 import { PATH_HOME, PATH_GAME, PATH_HISTORY } from '../constants';
 
@@ -20,7 +20,7 @@ class Main extends Component {
         const { errorMessage, dismissError, player1Id, player2Id, history, dismissNotification, notification } = this.props;
 
         return (
-            <Grid>
+            <div>
                 {notification &&
                 <Alert bsStyle="success" onDismiss={dismissNotification}>
                     <h4>{notification}</h4>
@@ -39,7 +39,7 @@ class Main extends Component {
                     <Route path={PATH_HISTORY} component={HistoryContainer} />
                     <Route component={NotFound} />
                 </Switch>
-            </Grid>
+            </div>
         );
     }
 }

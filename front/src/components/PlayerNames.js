@@ -1,14 +1,13 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
 
 const PlayerNames = ({ player1Name, player2Name, player1ClassName, player2ClassName }) =>
-    <div className="player-names">
-        <Col className={player1ClassName} xs={6}>
+    <div className="player-names flex space-around">
+        <div className={player1ClassName}>
             {player1Name}
-        </Col>
-        <Col className={player2ClassName} xs={6}>
+        </div>
+        <div className={player2ClassName}>
             {player2Name}
-        </Col>
+        </div>
     </div>;
 
 export default PlayerNames;
