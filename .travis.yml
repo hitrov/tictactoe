@@ -6,9 +6,10 @@ cache:
     - front/node_modules
 script:
   - cd front
-  - pwd
-  - ls -lah
-  - npm run build
+#  - pwd
+#  - ls -lah
+  - yarn
+  - yarn build
 deploy:
   provider: pages
   skip_cleanup: true
