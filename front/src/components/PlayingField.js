@@ -1,18 +1,17 @@
 import React from 'react';
 import Line from './Line';
-import { Row } from 'react-bootstrap';
 
 const PlayingField = () =>
-    <div>
-        <Row className="show-grid">
+    <div className="flex center">
+        <div>
             <Line line={[1, 2, 3]} />
-        </Row>
-        <Row className="show-grid">
+        </div>
+        <div>
             <Line line={[4, 5, 6]} />
-        </Row>
-        <Row className="show-grid">
+        </div>
+        <div>
             <Line line={[7, 8, 9]} />
-        </Row>
+        </div>
     </div>;
 
 export default PlayingField;
