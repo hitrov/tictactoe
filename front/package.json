@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "REACT_APP_PUBLIC_URL=https://hitrov.github.io/tictactoe REACT_APP_API_BASE_URL=https://api.ttt.hitrov.com react-scripts build",
+    "build": "REACT_APP_API_BASE_URL=https://api.ttt.hitrov.com react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
