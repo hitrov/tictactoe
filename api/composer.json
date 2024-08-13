@@ -1,17 +1,24 @@
 {
-    "name": "aleksander.hitrov/tictactoe",
-    "authors": [
-        {
-            "name": "Alexander Hitrov",
-            "email": "aleksander.hitrov@betgames.tv"
-        }
-    ],
-    "require": {
-      "ext-json": "*"
-    },
-    "autoload": {
-        "psr-4": {
-            "TicTacToe\\":"application/src/"
-        }
+  "name": "hitrov/tictactoe",
+  "description": "",
+  "authors": [
+    {
+      "name": "Alexander Hitrov",
+      "email": "github.com@hitrov.com"
     }
+  ],
+  "require": {
+    "php": "^7.4",
+    "ext-mysqli": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-mbstring": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "TicTacToe\\": "application/src/"
+    }
+  },
+  "license": "proprietary"
 }

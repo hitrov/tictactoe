@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'MySQ|_',
-	'database' => 'tictactoe',
+	'hostname' => getenv('DB_HOST') ?: 'db',
+	'username' => getenv('DB_USER') ?: 'user',
+	'password' => getenv('DB_PASSWORD') ?: 'userpassword',
+	'database' => getenv('DB_NAME') ?: 'codeigniter_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

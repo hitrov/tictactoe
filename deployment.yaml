@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tictactoe
+  labels:
+    app: tictactoe
+spec:
+  replicas: 1  # Number of pods to run
+  selector:
+    matchLabels:
+      app: tictactoe
+  template:
+    metadata:
+      labels:
+        app: tictactoe
+    spec:
+      containers:
+        - name: tictactoe
+          image: eu-frankfurt-1.ocir.io/fr5wxy9hihw0/tictactoe:latest
+          ports:
+            - containerPort: 80  # Container port
+          env:
+            - name: PORT
+              value: "80"  # Default port, can be overridden by K8s
+      imagePullSecrets:
+        - name: free-registry-secret2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tictactoe
+spec:
+  selector:
+    app: tictactoe
+  ports:
+    - protocol: TCP
+      port: 80  # Service port
+      targetPort: 80  # Container port
+  type: ClusterIP  # Changed from LoadBalancer to ClusterIP

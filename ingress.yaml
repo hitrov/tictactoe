@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: tictactoe-ingress
+spec:
+  rules:
+    - host: api.ttt.hitrov.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: tictactoe
+                port:
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - api.ttt.hitrov.com
+      secretName: letsencrypt-prod-tictactoe

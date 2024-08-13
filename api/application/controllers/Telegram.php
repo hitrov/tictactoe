@@ -89,8 +89,9 @@ class Telegram extends MY_Controller {
         }
 
         $token = $this->input->get('token');
+        $serverToken = getenv('TOKEN');
         try {
-            if (empty($token) || $token !== Telegram_bot::TOKEN) {
+            if (empty($token) || empty($serverToken) || $token !== $serverToken) {
                 throw new Unauthorized('Unauthorized');
             }
 

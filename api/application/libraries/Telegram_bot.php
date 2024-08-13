@@ -7,13 +7,9 @@
  */
 
 class Telegram_bot {
-    const API_KEY = '540163061:AAH43cg8149rR_Bu9mjAoM3D02xZjCG7msU';
-
-    const TOKEN = 'DEC5233158CD8972D0E83A8B6C7ACD14320A52D9AF37D71A9E29566EB349DD62287EFAF5A3F71F4B6DB2DB1045FB0CEAF5AB3A7F4ACF391B4FB682B2448AF4F5';
-
     public function sendMessage($chatId, $text, $replyKeyboardMarkup = NULL, $parseMode = null)
     {
-        $url = 'https://api.telegram.org/bot' . self::API_KEY . '/sendMessage';
+        $url = 'https://api.telegram.org/bot' . getenv('API_KEY') . '/sendMessage';
         !$replyKeyboardMarkup ? $replyKeyboardMarkup = new stdClass() : '';
 
         $postFields = [
