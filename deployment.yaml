@@ -14,14 +14,37 @@ spec:
       labels:
         app: tictactoe
     spec:
+      initContainers:
+        - name: copy-app
+          image: eu-frankfurt-1.ocir.io/fr5wxy9hihw0/tictactoe:latest
+          command: ['sh', '-c', 'cp -r /var/www/html/. /app/']
+          volumeMounts:
+            - name: app-files
+              mountPath: /app
       containers:
-        - name: tictactoe
+        - name: tictactoe-php-fpm
           image: eu-frankfurt-1.ocir.io/fr5wxy9hihw0/tictactoe:latest
           ports:
-            - containerPort: 80  # Container port
-          env:
-            - name: PORT
-              value: "80"  # Default port, can be overridden by K8s
+            - containerPort: 9000
+          envFrom:
+            - secretRef:
+                name: tictactoe-secrets
+        - name: tictactoe-nginx
+          image: nginx:1.28-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: tictactoe-nginx-config
+              mountPath: /etc/nginx/conf.d
+            - name: app-files
+              mountPath: /var/www/html
+              readOnly: true
+      volumes:
+        - name: tictactoe-nginx-config
+          configMap:
+            name: tictactoe-nginx-config
+        - name: app-files
+          emptyDir: {}
       imagePullSecrets:
         - name: free-registry-secret2
 ---
